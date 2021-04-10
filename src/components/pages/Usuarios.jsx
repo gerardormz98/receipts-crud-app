@@ -1,23 +1,23 @@
 import React, { Component } from "react";
-import { MDBDataTable } from "mdbreact";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlus,
   faPencilAlt,
   faTrash,
-  faReceipt
+  faUsers
 } from "@fortawesome/free-solid-svg-icons";
-import RecibosService from "./../services/RecibosService";
-import Modal from "./modals/Modal";
-import NuevoReciboModalBody from "./modals/NuevoReciboModalBody";
-import EditarReciboModalBody from "./modals/EditarReciboModalBody";
-import EliminarReciboModalBody from "./modals/EliminarReciboModalBody";
-import moment from "moment";
+import { MDBDataTable } from "mdbreact";
+import AuthService from "./../../services/AuthService";
+import Modal from "./../modals/Modal";
+import UsuarioService from "./../../services/UsuarioService";
+import NuevoUsuarioModalBody from "./../modals/NuevoUsuarioModalBody";
+import EliminarUsuarioModalBody from "./../modals/EliminarUsuarioModalBody";
+import EditarUsuarioModalBody from "./../modals/EditarUsuarioModalBody";
 
-class Recibos extends Component {
+class Usuarios extends Component {
   state = {
     data: {},
-    reciboSeleccionado: {},
+    usuarioSeleccionado: {},
     cargando: false
   };
 
@@ -26,28 +26,18 @@ class Recibos extends Component {
       data: {
         columns: [
           {
-            label: "No. de recibo",
-            field: "receiptID",
-            sort: "desc"
-          },
-          {
-            label: "Monto",
-            field: "amount",
+            label: "ID",
+            field: "userID",
             sort: "asc"
           },
           {
-            label: "Proveedor",
-            field: "supplierName",
+            label: "Correo",
+            field: "email",
             sort: "asc"
           },
           {
-            label: "Fecha",
-            field: "date",
-            sort: "asc"
-          },
-          {
-            label: "Comentario",
-            field: "comments",
+            label: "Administrador",
+            field: "isAdmin",
             sort: "asc"
           },
           {
@@ -61,56 +51,49 @@ class Recibos extends Component {
     });
   }
 
-  addSelectedReciboToState = recibo => {
-    const { receiptID, amount, supplier, date, comments } = recibo;
+  addSelectedUserToState = user => {
+    const { userID, email, isAdmin } = user;
     this.setState({
-      reciboSeleccionado: {
-        receiptID,
-        amount,
-        supplier,
-        date,
-        comments
-      }
+      usuarioSeleccionado: { userID, email, isAdmin: isAdmin === "Sí" }
     });
   };
 
   processRows(rows) {
     rows.forEach(r => {
-      r.date = moment(r.date).format("lll");
-      r.supplierName = r.supplier.name;
       r.actions = (
         <div className="d-flex justify-content-center">
           <button
             type="button"
             data-toggle="modal"
-            data-target="#editarReciboModal"
+            data-target="#editarUsuarioModal"
             style={{ width: 27, height: 27 }}
             className="btn btn-info btn-small p-0 w-0 mr-2"
-            onClick={() => this.addSelectedReciboToState(r)}
+            onClick={() => this.addSelectedUserToState(r)}
           >
             <FontAwesomeIcon icon={faPencilAlt} size="sm" />
           </button>
           <button
             type="button"
             data-toggle="modal"
-            data-target="#eliminarReciboModal"
+            data-target="#eliminarUsuarioModal"
             style={{ width: 27, height: 27 }}
             className="btn btn-danger btn-small p-0 w-0"
-            onClick={() => this.addSelectedReciboToState(r)}
+            onClick={() => this.addSelectedUserToState(r)}
           >
             <FontAwesomeIcon icon={faTrash} size="sm" />
           </button>
         </div>
       );
+      r.isAdmin = r.isAdmin ? "Sí" : "No";
     });
 
     return rows;
   }
 
-  refreshRecibos = (mostrarAnimacion = false) => {
+  refreshUsuarios = (mostrarAnimacion = false) => {
     if (mostrarAnimacion) this.setState({ cargando: true });
 
-    RecibosService.getRecibos()
+    UsuarioService.getUsuarios()
       .then(res => {
         if (res.status === 200) {
           this.setState({ cargando: false });
@@ -121,7 +104,9 @@ class Recibos extends Component {
   };
 
   componentDidMount() {
-    this.refreshRecibos(true);
+    const user = AuthService.getUserInfo();
+    if (!user.isAdmin) this.props.history.push("/recibos");
+    else this.refreshUsuarios(true);
   }
 
   render() {
@@ -130,16 +115,16 @@ class Recibos extends Component {
         <div className="w-100 d-flex justify-content-between align-items-center">
           <div className="d-flex align-items-center">
             <FontAwesomeIcon
-              icon={faReceipt}
+              icon={faUsers}
               size="2x"
               style={{ color: "#343a40" }}
             />
-            <h3 className="mb-0 ml-3">Mis recibos</h3>
+            <h3 className="mb-0 ml-3">Usuarios</h3>
           </div>
           <button
             className="btn btn-success"
             data-toggle="modal"
-            data-target="#nuevoReciboModal"
+            data-target="#nuevoUsuarioModal"
           >
             <FontAwesomeIcon icon={faPlus} /> Agregar
           </button>
@@ -162,39 +147,35 @@ class Recibos extends Component {
             hover
             responsive
             data={this.state.data}
-            order={["idRecibo", "desc"]}
-            noRecordsFoundLabel="No se encontraron registros."
-            infoLabel={["Mostrando", "a", "de", "resultados"]}
-            paginationLabel={["Anterior", "Siguiente"]}
           />
         )}
 
         <Modal
-          modalId="nuevoReciboModal"
-          modalTitle="Agregar nuevo recibo"
+          modalId="nuevoUsuarioModal"
+          modalTitle="Agregar nuevo usuario"
           modalBody={
-            <NuevoReciboModalBody onReciboAdded={this.refreshRecibos} />
+            <NuevoUsuarioModalBody onUsuarioAdded={this.refreshUsuarios} />
           }
         />
 
         <Modal
-          modalId="editarReciboModal"
-          modalTitle={`Editar recibo #${this.state.reciboSeleccionado.idRecibo}`}
+          modalId="editarUsuarioModal"
+          modalTitle="Editar usuario"
           modalBody={
-            <EditarReciboModalBody
-              recibo={this.state.reciboSeleccionado}
-              onReciboEdited={this.refreshRecibos}
+            <EditarUsuarioModalBody
+              usuario={this.state.usuarioSeleccionado}
+              onUsuarioEdited={this.refreshUsuarios}
             />
           }
         />
 
         <Modal
-          modalId="eliminarReciboModal"
-          modalTitle="Eliminar recibo"
+          modalId="eliminarUsuarioModal"
+          modalTitle="Eliminar usuario"
           modalBody={
-            <EliminarReciboModalBody
-              recibo={this.state.reciboSeleccionado}
-              onReciboDeleted={this.refreshRecibos}
+            <EliminarUsuarioModalBody
+              usuario={this.state.usuarioSeleccionado}
+              onUsuarioDeleted={this.refreshUsuarios}
             />
           }
         />
@@ -203,4 +184,4 @@ class Recibos extends Component {
   }
 }
 
-export default Recibos;
+export default Usuarios;

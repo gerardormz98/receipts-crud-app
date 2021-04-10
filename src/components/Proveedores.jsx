@@ -137,9 +137,6 @@ class Proveedores extends Component {
             hover
             responsive
             data={this.state.data}
-            noRecordsFoundLabel="No se encontraron registros."
-            infoLabel={["Mostrando", "a", "de", "resultados"]}
-            paginationLabel={["Anterior", "Siguiente"]}
           />
         )}
 

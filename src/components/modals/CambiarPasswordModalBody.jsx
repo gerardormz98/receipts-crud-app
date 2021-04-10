@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import AuthService from "../../services/AuthService";
-import { DEFAULT_ERROR } from "../../constants";
+import { DEFAULT_ERROR } from "../../utils/constants";
 import $ from "jquery";
 
 class CambiarPasswordModalBody extends Component {

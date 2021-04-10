@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import UsuarioService from "../../services/UsuarioService";
 import AuthService from "../../services/AuthService";
-import { DEFAULT_ERROR } from "../../constants";
+import { DEFAULT_ERROR } from "../../utils/constants";
 import $ from "jquery";
 
 class EditarUsuarioModalBody extends Component {

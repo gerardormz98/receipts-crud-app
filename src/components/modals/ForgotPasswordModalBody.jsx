@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import FormErrors from "../FormErrors";
-import Validations from "../../validations";
+import Validations from "../../utils/validations";
 import AuthService from "../../services/AuthService";
 import $ from "jquery";
 

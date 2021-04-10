@@ -1,6 +1,6 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import { BASE_URL } from "../constants";
+import { BASE_URL } from "../utils/constants";
 
 const isLoggedIn = () => {
   let token = getUserToken();

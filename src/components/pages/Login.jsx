@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faKey, faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import AuthService from "./../services/AuthService";
+import AuthService from "./../../services/AuthService";
 import "./Login.css";
 import $ from "jquery";
-import Validations from "../validations";
-import { DEFAULT_ERROR } from "../constants";
-import FormErrors from "./FormErrors";
-import Modal from "./modals/Modal";
-import ForgotPasswordModalBody from "./modals/ForgotPasswordModalBody";
+import Validations from "../../utils/validations";
+import { DEFAULT_ERROR } from "../../utils/constants";
+import FormErrors from "./../FormErrors";
+import Modal from "./../modals/Modal";
+import ForgotPasswordModalBody from "./../modals/ForgotPasswordModalBody";
 
 class Login extends Component {
   state = {

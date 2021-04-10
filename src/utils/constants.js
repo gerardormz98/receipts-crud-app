@@ -1,4 +1,4 @@
-import AuthService from "./services/AuthService";
+import AuthService from "../services/AuthService";
 
 export const BASE_URL = "https://simple-crud-web-api.azurewebsites.net/api";
 export const DEFAULT_ERROR =

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { DEFAULT_ERROR } from "./../constants";
+import { DEFAULT_ERROR } from "./../utils/constants";
 import ProveedorService from "./../services/ProveedorService";
 
 class ProveedorDropdown extends Component {

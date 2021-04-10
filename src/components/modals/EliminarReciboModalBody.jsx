@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import RecibosService from "./../../services/RecibosService";
-import { DEFAULT_ERROR } from "../../constants";
+import { DEFAULT_ERROR } from "../../utils/constants";
 import $ from "jquery";
 
 class EliminarReciboModalBody extends Component {

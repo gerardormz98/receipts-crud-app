@@ -1,19 +1,19 @@
 import React, { Component } from "react";
-import Navbar from "./components/Navbar";
-import Recibos from "./components/Recibos";
-import Usuarios from "./components/Usuarios";
-import Catalogos from "./components/Catalogos";
-import Perfil from "./components/Perfil";
-import Login from "./components/Login";
-import NotFound from "./components/NotFound";
+import Navbar from "./Navbar";
+import Recibos from "./pages/Recibos";
+import Usuarios from "./pages/Usuarios";
+import Catalogos from "./pages/Catalogos";
+import Perfil from "./pages/Perfil";
+import Login from "./pages/Login";
+import NotFound from "./pages/NotFound";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect
 } from "react-router-dom";
-import AuthRoute from "./components/AuthRoute";
-import AuthService from "./services/AuthService";
+import AuthRoute from "./AuthRoute";
+import AuthService from "../services/AuthService";
 
 class App extends Component {
   state = {

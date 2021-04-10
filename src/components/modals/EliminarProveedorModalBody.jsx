@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ProveedorService from "./../../services/ProveedorService";
-import { DEFAULT_ERROR } from "../../constants";
+import { DEFAULT_ERROR } from "../../utils/constants";
 import $ from "jquery";
 
 class EliminarProveedorModalBody extends Component {

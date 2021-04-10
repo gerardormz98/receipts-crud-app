@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Proveedores from "./Proveedores";
-import AuthService from "./../services/AuthService";
+import Proveedores from "./../Proveedores";
+import AuthService from "./../../services/AuthService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faListAlt } from "@fortawesome/free-solid-svg-icons";
 

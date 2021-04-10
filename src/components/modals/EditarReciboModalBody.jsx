@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
-import Validations from "../../validations";
+import Validations from "../../utils/validations";
 import FormErrors from "../FormErrors";
 import ProveedorDropdown from "../ProveedorDropdown";
 import RecibosService from "../../services/RecibosService";
-import { DEFAULT_ERROR } from "../../constants";
+import { DEFAULT_ERROR } from "../../utils/constants";
 import $ from "jquery";
 
 class EditarReciboModalBody extends Component {

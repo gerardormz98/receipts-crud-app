@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL, GetAuthHeader } from "../constants";
+import { BASE_URL, GetAuthHeader } from "../utils/constants";
 
 const getRecibos = () => {
   return axios.get(`${BASE_URL}/receipts`, {

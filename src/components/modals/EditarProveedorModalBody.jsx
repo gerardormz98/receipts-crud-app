@@ -3,8 +3,8 @@ import ProveedorService from "../../services/ProveedorService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdCard, faPhone } from "@fortawesome/free-solid-svg-icons";
 import $ from "jquery";
-import Validations from "../../validations";
-import { DEFAULT_ERROR } from "../../constants";
+import Validations from "../../utils/validations";
+import { DEFAULT_ERROR } from "../../utils/constants";
 import FormErrors from "../FormErrors";
 
 class EditarProveedorModalBody extends Component {

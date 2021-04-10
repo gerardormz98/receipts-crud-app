@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import UsuarioService from "./../../services/UsuarioService";
 import AuthService from "./../../services/AuthService";
-import { DEFAULT_ERROR } from "../../constants";
+import { DEFAULT_ERROR } from "../../utils/constants";
 import $ from "jquery";
 
 class EliminarUsuarioModalBody extends Component {

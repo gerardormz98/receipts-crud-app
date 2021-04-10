@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import AuthService from "./../services/AuthService";
-import CambiarPasswordModalBody from "./modals/CambiarPasswordModalBody";
-import Modal from "./modals/Modal";
+import AuthService from "./../../services/AuthService";
+import CambiarPasswordModalBody from "./../modals/CambiarPasswordModalBody";
+import Modal from "./../modals/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 

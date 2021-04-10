@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faKey } from "@fortawesome/free-solid-svg-icons";
-import Validations from "../../validations";
+import Validations from "../../utils/validations";
 import FormErrors from "./../FormErrors";
 import UsuarioService from "./../../services/UsuarioService";
-import { DEFAULT_ERROR } from "../../constants";
+import { DEFAULT_ERROR } from "../../utils/constants";
 import $ from "jquery";
 
 class NuevoReciboModalBody extends Component {

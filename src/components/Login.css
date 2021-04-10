@@ -1,0 +1,16 @@
+.backgroundImage {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  display: block;
+  background-image: url("/img/login-background.jpg");
+  background-size: cover;
+  filter: blur(5px);
+  transform: scale(1.1);
+}
+
+.imgLogin {
+  width: 50px;
+  height: 40px;
+}

@@ -25,7 +25,7 @@ class SupplierDropdown extends Component {
   componentDidUpdate() {
     if (
       this.props.supplierID &&
-      !this.state.suppliers.some(p => p.supplierID === this.props.supplierID)
+      !this.state.suppliers.some(p => p.supplierID === parseInt(this.props.supplierID))
     ) {
       this.props.onLoadValues(
         this.state.suppliers[0] ? this.state.suppliers[0].supplierID : ""

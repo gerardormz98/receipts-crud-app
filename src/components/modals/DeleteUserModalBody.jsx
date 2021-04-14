@@ -25,7 +25,10 @@ class DeleteUserModalBody extends Component {
           }
         })
         .catch(err => {
-          alert(DEFAULT_ERROR);
+          let message = DEFAULT_ERROR;
+          if (err.response.data.message) message = err.response.data.message;
+
+          alert(message);
         })
         .finally(() => {
           this.setState({ loading: false });

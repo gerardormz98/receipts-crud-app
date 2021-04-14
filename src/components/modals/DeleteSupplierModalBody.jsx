@@ -32,6 +32,7 @@ class DeleteSupplierModalBody extends Component {
       <React.Fragment>
         <div className="modal-body p-4">
           <span>
+            WARNING: Deleting this supplier will remove all the receipts linked to this supplier ID.
             Are you sure you want to delete the supplier: <b>{name}</b>?
           </span>
         </div>

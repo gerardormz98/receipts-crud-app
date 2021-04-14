@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
-class NuevoReciboModal extends Component {
+class Modal extends Component {
   handleConfirmClick = () => {
-    this.setState({ cargando: true });
+    this.setState({ loading: true });
   };
 
   render() {
@@ -14,13 +14,13 @@ class NuevoReciboModal extends Component {
         id={modalId}
         tabIndex="-1"
         role="dialog"
-        aria-labelledby="tituloModal"
+        aria-labelledby="modalTitle"
         aria-hidden="true"
       >
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="tituloModal">
+              <h5 className="modal-title" id="modalTitle">
                 {modalTitle}
               </h5>
               <button
@@ -40,4 +40,4 @@ class NuevoReciboModal extends Component {
   }
 }
 
-export default NuevoReciboModal;
+export default Modal;

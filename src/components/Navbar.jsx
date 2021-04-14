@@ -23,7 +23,7 @@ class Navbar extends Component {
               height="25"
               alt="Icon"
             />
-            <b>Simple CRUD</b>
+            <b>Receipts CRUD</b>
           </div>
         </Link>
         <button
@@ -41,31 +41,31 @@ class Navbar extends Component {
           <ul className="navbar-nav mr-auto">
             <NavLink
               activeClassName="active"
-              to="/recibos"
+              to="/receipts"
               className="text-decoration-none"
             >
               <li className="nav-item">
-                <span className="nav-link">Mis recibos</span>
+                <span className="nav-link">My receipts</span>
               </li>
             </NavLink>
-            {this.props.esAdmin ? this.getAdminOptions() : null}
+            {this.props.isAdmin ? this.getAdminOptions() : null}
             <NavLink
               activeClassName="active"
-              to="/perfil"
+              to="/profile"
               className="text-decoration-none"
             >
               <li className="nav-item">
-                <span className="nav-link">Perfil</span>
+                <span className="nav-link">Profile</span>
               </li>
             </NavLink>
           </ul>
-          <span className="navbar-text">¡Hola, {this.props.correo}!</span>
+          <span className="navbar-text">Hi, {this.props.email}!</span>
           <button
             type="button"
             className="btn btn-link pl-0 pl-lg-3 text-danger d-block d-lg-inline-block"
             onClick={this.handleLogOut}
           >
-            Cerrar sesión
+            Log out
           </button>
         </div>
       </nav>
@@ -77,20 +77,20 @@ class Navbar extends Component {
       <React.Fragment>
         <NavLink
           activeClassName="active"
-          to="/usuarios"
+          to="/users"
           className="text-decoration-none"
         >
           <li className="nav-item">
-            <span className="nav-link">Usuarios</span>
+            <span className="nav-link">Users</span>
           </li>
         </NavLink>
         <NavLink
           activeClassName="active"
-          to="/catalogos"
+          to="/catalogs"
           className="text-decoration-none"
         >
           <li className="nav-item">
-            <span className="nav-link">Catálogos</span>
+            <span className="nav-link">Catalogs</span>
           </li>
         </NavLink>
       </React.Fragment>

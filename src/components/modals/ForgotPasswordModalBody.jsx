@@ -7,17 +7,17 @@ import AuthService from "../../services/AuthService";
 import $ from "jquery";
 
 class ForgotPasswordModal extends Component {
-  state = { email: "", formErrors: [], cargando: false };
+  state = { email: "", formErrors: [], loading: false };
 
-  handleCorreoChange = e => {
+  handleEmailChange = e => {
     this.setState({
       email: e.target.value
     });
   };
 
-  handleConfirmarClick = e => {
+  handleConfirmClick = e => {
     if (this.formValid()) {
-      this.setState({ cargando: true });
+      this.setState({ loading: true });
 
       AuthService.resetPassword(this.state.email)
         .then(res => {
@@ -27,7 +27,7 @@ class ForgotPasswordModal extends Component {
         })
         .catch(err => {})
         .finally(() => {
-          this.setState({ cargando: false });
+          this.setState({ loading: false });
           $("#forgotPasswordModal").modal("hide");
         });
     }
@@ -38,13 +38,13 @@ class ForgotPasswordModal extends Component {
 
     if (!Validations.required(this.state.email))
       formErrors.push({
-        field: "Correo",
-        error: "El correo es requerido."
+        field: "Email",
+        error: "The email is required."
       });
     else if (!Validations.email(this.state.email))
       formErrors.push({
-        field: "Correo",
-        error: "Introduce un correo válido."
+        field: "Email",
+        error: "Please enter a valid email."
       });
 
     this.setState({ formErrors });
@@ -52,7 +52,7 @@ class ForgotPasswordModal extends Component {
   }
 
   render() {
-    const { formErrors, email, cargando } = this.state;
+    const { formErrors, email, loading } = this.state;
 
     return (
       <React.Fragment>
@@ -67,16 +67,15 @@ class ForgotPasswordModal extends Component {
             <input
               type="text"
               className={`form-control ${
-                formErrors.some(e => e.field === "Correo") ? "is-invalid" : ""
+                formErrors.some(e => e.field === "Email") ? "is-invalid" : ""
               }`}
               value={email}
-              placeholder="Correo"
-              onChange={this.handleCorreoChange}
+              placeholder="Email"
+              onChange={this.handleEmailChange}
             />
           </div>
           <small className="text-secondary">
-            Si el email ingresado coincide con el que tenemos registrado, se te
-            enviará un correo con las instrucciones para resetear tu password.
+            If the email is registered, an email will be sent with the directions to reset your password.
           </small>
         </div>
         <div className="modal-footer">
@@ -85,14 +84,14 @@ class ForgotPasswordModal extends Component {
             className="btn btn-secondary"
             data-dismiss="modal"
           >
-            Cerrar
+            Close
           </button>
           <button
             type="button"
-            className={`btn btn-success ${cargando ? " disabled" : ""}`}
-            onClick={this.handleConfirmarClick}
+            className={`btn btn-success ${loading ? " disabled" : ""}`}
+            onClick={this.handleConfirmClick}
           >
-            {cargando ? (
+            {loading ? (
               <span
                 className="spinner-border spinner-border-sm mr-2"
                 style={{ marginBottom: 2 }}
@@ -102,7 +101,7 @@ class ForgotPasswordModal extends Component {
               ""
             )}
 
-            {cargando ? "Enviando..." : "Enviar"}
+            {loading ? "Sending..." : "Send"}
           </button>
         </div>
       </React.Fragment>

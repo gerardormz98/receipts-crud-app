@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Navbar from "./Navbar";
-import Recibos from "./pages/Recibos";
-import Usuarios from "./pages/Usuarios";
-import Catalogos from "./pages/Catalogos";
-import Perfil from "./pages/Perfil";
+import Receipts from "./pages/Receipts";
+import Users from "./pages/Users";
+import Catalogs from "./pages/Catalogs";
+import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import {
@@ -39,8 +39,8 @@ class App extends Component {
     const navbarComponent = isLoggedIn ? (
       <Navbar
         onLogout={this.handleLogout}
-        correo={userInfo.email}
-        esAdmin={userInfo.isAdmin}
+        email={userInfo.email}
+        isAdmin={userInfo.isAdmin}
       />
     ) : null;
 
@@ -56,30 +56,30 @@ class App extends Component {
             <AuthRoute
               path="/"
               exact
-              component={Recibos}
+              component={Receipts}
               onLogout={this.handleLogout}
             />
             <AuthRoute
-              path="/recibos"
+              path="/receipts"
               exact
-              component={Recibos}
+              component={Receipts}
               onLogout={this.handleLogout}
             />
             <AuthRoute
-              path="/usuarios"
+              path="/users"
               exact
-              component={Usuarios}
+              component={Users}
               onLogout={this.handleLogout}
             />
             <AuthRoute
-              path="/catalogos"
+              path="/catalogs"
               exact
-              component={Catalogos}
+              component={Catalogs}
               onLogout={this.handleLogout}
             />
             <AuthRoute
-              path="/perfil"
-              component={Perfil}
+              path="/profile"
+              component={Profile}
               onLogout={this.handleLogout}
             />
             <AuthRoute
@@ -95,7 +95,7 @@ class App extends Component {
 
   getLoginRoute() {
     if (this.state.isLoggedIn)
-      return <Redirect path="/login" exact to="/recibos" />;
+      return <Redirect path="/login" exact to="/receipts" />;
 
     return (
       <Route

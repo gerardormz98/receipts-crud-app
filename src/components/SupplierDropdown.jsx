@@ -1,17 +1,17 @@
 import React, { Component } from "react";
-import { DEFAULT_ERROR } from "./../utils/constants";
-import ProveedorService from "./../services/ProveedorService";
+import { DEFAULT_ERROR } from "../utils/constants";
+import SupplierService from "../services/SupplierService";
 
-class ProveedorDropdown extends Component {
+class SupplierDropdown extends Component {
   state = {
-    proveedores: []
+    suppliers: []
   };
 
   componentDidMount() {
-    ProveedorService.getProveedores()
+    SupplierService.getSuppliers()
       .then(res => {
         if (res.status === 200) {
-          this.setState({ proveedores: res.data });
+          this.setState({ suppliers: res.data });
 
           if (res.data[0]) this.props.onLoadValues(res.data[0].supplierID);
           else this.props.onLoadValues("");
@@ -25,10 +25,10 @@ class ProveedorDropdown extends Component {
   componentDidUpdate() {
     if (
       this.props.supplierID &&
-      !this.state.proveedores.some(p => p.supplierID === this.props.supplierID)
+      !this.state.suppliers.some(p => p.supplierID === this.props.supplierID)
     ) {
       this.props.onLoadValues(
-        this.state.proveedores[0] ? this.state.proveedores[0].supplierID : ""
+        this.state.suppliers[0] ? this.state.suppliers[0].supplierID : ""
       );
     }
   }
@@ -36,15 +36,15 @@ class ProveedorDropdown extends Component {
   render() {
     return (
       <div className="d-flex align-items-center mb-2">
-        <span className="mr-2 text-secondary">Proveedor:</span>
+        <span className="mr-2 text-secondary">Supplier:</span>
         <select
           value={this.props.supplierID}
           className={`form-control  ${
             this.props.hasErrors ? "is-invalid" : ""
           }`}
-          onChange={this.props.onProveedorChange}
+          onChange={this.props.onSupplierChange}
         >
-          {this.state.proveedores.map(p => (
+          {this.state.suppliers.map(p => (
             <option key={p.supplierID} value={p.supplierID}>
               {p.name}
             </option>
@@ -55,4 +55,4 @@ class ProveedorDropdown extends Component {
   }
 }
 
-export default ProveedorDropdown;
+export default SupplierDropdown;

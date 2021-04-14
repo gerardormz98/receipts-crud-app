@@ -1,26 +1,26 @@
 import React, { Component } from "react";
 import { MDBDataTable } from "mdbreact";
-import ProveedorService from "./../services/ProveedorService";
+import SupplierService from "../services/SupplierService";
 import Modal from "./modals/Modal";
-import EditarProveedorModalBody from "./modals/EditarProveedorModalBody";
-import EliminarProveedorModalBody from "./modals/EliminarProveedorModalBody";
+import EditSupplierModalBody from "./modals/EditSupplierModalBody";
+import DeleteSupplierModalBody from "./modals/DeleteSupplierModalBody";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPencilAlt,
   faTrash,
   faPlus
 } from "@fortawesome/free-solid-svg-icons";
-import NuevoProveedorModalBody from "./modals/NuevoProveedorModalBody";
+import NewSupplierModalBody from "./modals/NewSupplierModalBody";
 
-class Proveedores extends Component {
+class Suppliers extends Component {
   state = {
-    proveedorSeleccionado: {
+    selectedSupplier: {
       supplierID: 0,
       name: "",
       phone: ""
     },
     data: {},
-    cargando: false
+    loading: false
   };
 
   addRowsToState(rows) {
@@ -33,12 +33,12 @@ class Proveedores extends Component {
             sort: "asc"
           },
           {
-            label: "Nombre",
+            label: "Name",
             field: "name",
             sort: "asc"
           },
           {
-            label: "Teléfono",
+            label: "Phone",
             field: "phone",
             sort: "asc"
           },
@@ -53,10 +53,10 @@ class Proveedores extends Component {
     });
   }
 
-  addSelectedProveedorToState = prov => {
+  addSelectedSupplierToState = prov => {
     const { supplierID, name, phone } = prov;
     this.setState({
-      proveedorSeleccionado: { supplierID, name, phone }
+      selectedSupplier: { supplierID, name, phone }
     });
   };
 
@@ -67,20 +67,20 @@ class Proveedores extends Component {
           <button
             type="button"
             data-toggle="modal"
-            data-target="#editarProveedorModal"
+            data-target="#editSupplierModal"
             style={{ width: 27, height: 27 }}
             className="btn btn-info btn-small p-0 w-0 mr-2"
-            onClick={() => this.addSelectedProveedorToState(r)}
+            onClick={() => this.addSelectedSupplierToState(r)}
           >
             <FontAwesomeIcon icon={faPencilAlt} size="sm" />
           </button>
           <button
             type="button"
             data-toggle="modal"
-            data-target="#eliminarProveedorModal"
+            data-target="#deleteSupplierModal"
             style={{ width: 27, height: 27 }}
             className="btn btn-danger btn-small p-0 w-0"
-            onClick={() => this.addSelectedProveedorToState(r)}
+            onClick={() => this.addSelectedSupplierToState(r)}
           >
             <FontAwesomeIcon icon={faTrash} size="sm" />
           </button>
@@ -91,13 +91,13 @@ class Proveedores extends Component {
     return rows;
   }
 
-  refreshProveedores = (mostrarAnimacion = false) => {
-    if (mostrarAnimacion) this.setState({ cargando: true });
+  refreshSuppliers = (mostrarAnimacion = false) => {
+    if (mostrarAnimacion) this.setState({ loading: true });
 
-    ProveedorService.getProveedores()
+    SupplierService.getSuppliers()
       .then(res => {
         if (res.status === 200) {
-          this.setState({ cargando: false });
+          this.setState({ loading: false });
           this.addRowsToState(res.data);
         }
       })
@@ -105,24 +105,24 @@ class Proveedores extends Component {
   };
 
   componentDidMount() {
-    this.refreshProveedores(true);
+    this.refreshSuppliers(true);
   }
 
   render() {
     return (
       <React.Fragment>
         <div className="d-flex align-items-center justify-content-between mb-3">
-          <h5>Proveedores</h5>
+          <h5>Suppliers</h5>
           <button
             className="btn btn-success btn-sm"
             data-toggle="modal"
-            data-target="#nuevoProveedorModal"
+            data-target="#newSupplierModal"
           >
-            <FontAwesomeIcon icon={faPlus} /> Agregar
+            <FontAwesomeIcon icon={faPlus} /> Add
           </button>
         </div>
 
-        {this.state.cargando ? (
+        {this.state.loading ? (
           <div className="w-100 d-flex justify-content-center mt-5">
             <div
               className="spinner-border text-primary"
@@ -141,33 +141,33 @@ class Proveedores extends Component {
         )}
 
         <Modal
-          modalId="nuevoProveedorModal"
-          modalTitle="Añadir proveedor"
+          modalId="newSupplierModal"
+          modalTitle="Add supplier"
           modalBody={
-            <NuevoProveedorModalBody
-              onProveedorAdded={this.refreshProveedores}
+            <NewSupplierModalBody
+              onSupplierAdded={this.refreshSuppliers}
             />
           }
         />
 
         <Modal
-          modalId="editarProveedorModal"
-          modalTitle="Editar proveedor"
+          modalId="editSupplierModal"
+          modalTitle="Edit supplier"
           modalBody={
-            <EditarProveedorModalBody
-              proveedor={this.state.proveedorSeleccionado}
-              onProveedorEdited={this.refreshProveedores}
+            <EditSupplierModalBody
+              supplier={this.state.selectedSupplier}
+              onSupplierEdited={this.refreshSuppliers}
             />
           }
         />
 
         <Modal
-          modalId="eliminarProveedorModal"
-          modalTitle="Eliminar proveedor"
+          modalId="deleteSupplierModal"
+          modalTitle="Delete supplier"
           modalBody={
-            <EliminarProveedorModalBody
-              proveedor={this.state.proveedorSeleccionado}
-              onProveedorDeleted={this.refreshProveedores}
+            <DeleteSupplierModalBody
+              supplier={this.state.selectedSupplier}
+              onSupplierDeleted={this.refreshSuppliers}
             />
           }
         />
@@ -176,4 +176,4 @@ class Proveedores extends Component {
   }
 }
 
-export default Proveedores;
+export default Suppliers;

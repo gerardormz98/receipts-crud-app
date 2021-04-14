@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ProveedorService from "../../services/ProveedorService";
+import SupplierService from "../../services/SupplierService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdCard, faPhone } from "@fortawesome/free-solid-svg-icons";
 import $ from "jquery";
@@ -7,21 +7,21 @@ import Validations from "../../utils/validations";
 import { DEFAULT_ERROR } from "../../utils/constants";
 import FormErrors from "../FormErrors";
 
-class EditarProveedorModalBody extends Component {
+class NewSupplierModalBody extends Component {
   state = {
     name: "",
     phone: "",
     formErrors: [],
-    cargando: false
+    loading: false
   };
 
-  handleNombreChange = e => {
+  handleNameChange = e => {
     this.setState({
       name: e.target.value
     });
   };
 
-  handleTelefonoChange = e => {
+  handlePhoneChange = e => {
     if (e.target.value.length <= 10) {
       this.setState({
         phone: e.target.value
@@ -29,18 +29,25 @@ class EditarProveedorModalBody extends Component {
     }
   };
 
-  handleConfirmarClick = e => {
-    if (this.formValid()) {
-      this.setState({ cargando: true });
+  cleanFields = () => {
+    this.setState({
+      name: "",
+      phone: ""
+    });
+  };
 
-      const { supplierID } = this.props.proveedor;
+  handleConfirmClick = e => {
+    if (this.formValid()) {
+      this.setState({ loading: true });
+
       const { name, phone } = this.state;
 
-      ProveedorService.putProveedor(supplierID, name, phone)
+      SupplierService.postSupplier(name, phone)
         .then(res => {
-          if (res.status === 200) {
-            this.props.onProveedorEdited();
-            $("#editarProveedorModal").modal("hide");
+          if (res.status === 201) {
+            this.props.onSupplierAdded();
+            this.cleanFields();
+            $("#newSupplierModal").modal("hide");
           }
         })
         .catch(err => {
@@ -50,7 +57,7 @@ class EditarProveedorModalBody extends Component {
           alert(message);
         })
         .finally(() => {
-          this.setState({ cargando: false });
+          this.setState({ loading: false });
         });
     }
   };
@@ -60,31 +67,22 @@ class EditarProveedorModalBody extends Component {
 
     if (!Validations.required(this.state.name))
       formErrors.push({
-        field: "Nombre",
-        error: "El nombre es requerido."
+        field: "Name",
+        error: "The name is required."
       });
 
     if (!Validations.required(this.state.phone))
       formErrors.push({
-        field: "Telefono",
-        error: "El teléfono es requerido."
+        field: "Phone",
+        error: "The phone is required."
       });
 
     this.setState({ formErrors });
     return formErrors.length === 0;
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.proveedor !== prevProps.proveedor) {
-      this.setState({
-        name: this.props.proveedor.name,
-        phone: this.props.proveedor.phone
-      });
-    }
-  }
-
   render() {
-    const { name, phone, formErrors, cargando } = this.state;
+    const { formErrors, name, phone, loading } = this.state;
 
     return (
       <React.Fragment>
@@ -100,11 +98,11 @@ class EditarProveedorModalBody extends Component {
             <input
               type="text"
               className={`form-control ${
-                formErrors.some(e => e.field === "Nombre") ? "is-invalid" : ""
+                formErrors.some(e => e.field === "Name") ? "is-invalid" : ""
               }`}
               value={name}
-              placeholder="Nombre"
-              onChange={this.handleNombreChange}
+              placeholder="Name"
+              onChange={this.handleNameChange}
             />
           </div>
 
@@ -117,11 +115,11 @@ class EditarProveedorModalBody extends Component {
             <input
               type="text"
               className={`form-control ${
-                formErrors.some(e => e.field === "Telefono") ? "is-invalid" : ""
+                formErrors.some(e => e.field === "Phone") ? "is-invalid" : ""
               }`}
-              value={phone.trim()}
-              placeholder="Teléfono"
-              onChange={this.handleTelefonoChange}
+              value={phone}
+              placeholder="Phone"
+              onChange={this.handlePhoneChange}
             />
           </div>
         </div>
@@ -131,14 +129,14 @@ class EditarProveedorModalBody extends Component {
             className="btn btn-secondary"
             data-dismiss="modal"
           >
-            Cerrar
+            Close
           </button>
           <button
             type="button"
-            className={`btn btn-info ${cargando ? " disabled" : ""}`}
-            onClick={this.handleConfirmarClick}
+            className={`btn btn-success ${loading ? " disabled" : ""}`}
+            onClick={this.handleConfirmClick}
           >
-            {cargando ? (
+            {loading ? (
               <span
                 className="spinner-border spinner-border-sm mr-2"
                 style={{ marginBottom: 2 }}
@@ -148,7 +146,7 @@ class EditarProveedorModalBody extends Component {
               ""
             )}
 
-            {cargando ? "Editando..." : "Editar"}
+            {loading ? "Creating..." : "Create"}
           </button>
         </div>
       </React.Fragment>
@@ -156,4 +154,4 @@ class EditarProveedorModalBody extends Component {
   }
 }
 
-export default EditarProveedorModalBody;
+export default NewSupplierModalBody;

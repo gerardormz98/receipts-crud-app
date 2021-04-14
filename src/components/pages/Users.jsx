@@ -7,18 +7,18 @@ import {
   faUsers
 } from "@fortawesome/free-solid-svg-icons";
 import { MDBDataTable } from "mdbreact";
-import AuthService from "./../../services/AuthService";
-import Modal from "./../modals/Modal";
-import UsuarioService from "./../../services/UsuarioService";
-import NuevoUsuarioModalBody from "./../modals/NuevoUsuarioModalBody";
-import EliminarUsuarioModalBody from "./../modals/EliminarUsuarioModalBody";
-import EditarUsuarioModalBody from "./../modals/EditarUsuarioModalBody";
+import AuthService from "../../services/AuthService";
+import Modal from "../modals/Modal";
+import UserService from "../../services/UserService";
+import NewUserModalBody from "../modals/NewUserModalBody";
+import DeleteUserModalBody from "../modals/DeleteUserModalBody";
+import EditUserModalBody from "../modals/EditUserModalBody";
 
-class Usuarios extends Component {
+class Users extends Component {
   state = {
     data: {},
-    usuarioSeleccionado: {},
-    cargando: false
+    selectedUser: {},
+    loading: false
   };
 
   addRowsToState(rows) {
@@ -31,12 +31,12 @@ class Usuarios extends Component {
             sort: "asc"
           },
           {
-            label: "Correo",
+            label: "Email",
             field: "email",
             sort: "asc"
           },
           {
-            label: "Administrador",
+            label: "Admin",
             field: "isAdmin",
             sort: "asc"
           },
@@ -54,7 +54,7 @@ class Usuarios extends Component {
   addSelectedUserToState = user => {
     const { userID, email, isAdmin } = user;
     this.setState({
-      usuarioSeleccionado: { userID, email, isAdmin: isAdmin === "Sí" }
+      selectedUser: { userID, email, isAdmin: isAdmin === "Yes" }
     });
   };
 
@@ -65,7 +65,7 @@ class Usuarios extends Component {
           <button
             type="button"
             data-toggle="modal"
-            data-target="#editarUsuarioModal"
+            data-target="#editUserModal"
             style={{ width: 27, height: 27 }}
             className="btn btn-info btn-small p-0 w-0 mr-2"
             onClick={() => this.addSelectedUserToState(r)}
@@ -75,7 +75,7 @@ class Usuarios extends Component {
           <button
             type="button"
             data-toggle="modal"
-            data-target="#eliminarUsuarioModal"
+            data-target="#deleteUserModal"
             style={{ width: 27, height: 27 }}
             className="btn btn-danger btn-small p-0 w-0"
             onClick={() => this.addSelectedUserToState(r)}
@@ -84,19 +84,19 @@ class Usuarios extends Component {
           </button>
         </div>
       );
-      r.isAdmin = r.isAdmin ? "Sí" : "No";
+      r.isAdmin = r.isAdmin ? "Yes" : "No";
     });
 
     return rows;
   }
 
-  refreshUsuarios = (mostrarAnimacion = false) => {
-    if (mostrarAnimacion) this.setState({ cargando: true });
+  refreshUsers = (showAnimation = false) => {
+    if (showAnimation) this.setState({ loading: true });
 
-    UsuarioService.getUsuarios()
+    UserService.getUsers()
       .then(res => {
         if (res.status === 200) {
-          this.setState({ cargando: false });
+          this.setState({ loading: false });
           this.addRowsToState(res.data);
         }
       })
@@ -105,8 +105,8 @@ class Usuarios extends Component {
 
   componentDidMount() {
     const user = AuthService.getUserInfo();
-    if (!user.isAdmin) this.props.history.push("/recibos");
-    else this.refreshUsuarios(true);
+    if (!user.isAdmin) this.props.history.push("/receipts");
+    else this.refreshUsers(true);
   }
 
   render() {
@@ -119,20 +119,20 @@ class Usuarios extends Component {
               size="2x"
               style={{ color: "#343a40" }}
             />
-            <h3 className="mb-0 ml-3">Usuarios</h3>
+            <h3 className="mb-0 ml-3">Users</h3>
           </div>
           <button
             className="btn btn-success"
             data-toggle="modal"
-            data-target="#nuevoUsuarioModal"
+            data-target="#newUserModal"
           >
-            <FontAwesomeIcon icon={faPlus} /> Agregar
+            <FontAwesomeIcon icon={faPlus} /> Add
           </button>
         </div>
 
         <hr />
 
-        {this.state.cargando ? (
+        {this.state.loading ? (
           <div className="w-100 d-flex justify-content-center mt-5">
             <div
               className="spinner-border text-primary"
@@ -151,31 +151,31 @@ class Usuarios extends Component {
         )}
 
         <Modal
-          modalId="nuevoUsuarioModal"
-          modalTitle="Agregar nuevo usuario"
+          modalId="newUserModal"
+          modalTitle="Add new user"
           modalBody={
-            <NuevoUsuarioModalBody onUsuarioAdded={this.refreshUsuarios} />
+            <NewUserModalBody onUserAdded={this.refreshUsers} />
           }
         />
 
         <Modal
-          modalId="editarUsuarioModal"
-          modalTitle="Editar usuario"
+          modalId="editUserModal"
+          modalTitle="Edit user"
           modalBody={
-            <EditarUsuarioModalBody
-              usuario={this.state.usuarioSeleccionado}
-              onUsuarioEdited={this.refreshUsuarios}
+            <EditUserModalBody
+              user={this.state.selectedUser}
+              onUserEdited={this.refreshUsers}
             />
           }
         />
 
         <Modal
-          modalId="eliminarUsuarioModal"
-          modalTitle="Eliminar usuario"
+          modalId="deleteUserModal"
+          modalTitle="Delete user"
           modalBody={
-            <EliminarUsuarioModalBody
-              usuario={this.state.usuarioSeleccionado}
-              onUsuarioDeleted={this.refreshUsuarios}
+            <DeleteUserModalBody
+              user={this.state.selectedUser}
+              onUserDeleted={this.refreshUsers}
             />
           }
         />
@@ -184,4 +184,4 @@ class Usuarios extends Component {
   }
 }
 
-export default Usuarios;
+export default Users;

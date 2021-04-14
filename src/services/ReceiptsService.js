@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BASE_URL, GetAuthHeader } from "../utils/constants";
 
-const getRecibos = () => {
+const getReceipts = () => {
   return axios.get(`${BASE_URL}/receipts`, {
     headers: {
       Authorization: GetAuthHeader()
@@ -9,7 +9,7 @@ const getRecibos = () => {
   });
 };
 
-const getRecibo = id => {
+const getReceipt = id => {
   return axios.get(`${BASE_URL}/receipts/${id}`, {
     headers: {
       Authorization: GetAuthHeader()
@@ -17,13 +17,13 @@ const getRecibo = id => {
   });
 };
 
-const postRecibo = (idProveedor, monto, comentario) => {
+const postReceipt = (supplierID, amount, comments) => {
   return axios.post(
     `${BASE_URL}/receipts`,
     {
-      SupplierID: idProveedor,
-      Amount: monto,
-      Comments: comentario
+      SupplierID: supplierID,
+      Amount: amount,
+      Comments: comments
     },
     {
       headers: {
@@ -33,13 +33,13 @@ const postRecibo = (idProveedor, monto, comentario) => {
   );
 };
 
-const putRecibo = (id, idProveedor, monto, comentario) => {
+const putReceipt = (id, supplierID, amount, comments) => {
   return axios.put(
     `${BASE_URL}/receipts/${id}`,
     {
-      SupplierID: idProveedor,
-      Amount: monto,
-      Comments: comentario
+      SupplierID: supplierID,
+      Amount: amount,
+      Comments: comments
     },
     {
       headers: {
@@ -49,7 +49,7 @@ const putRecibo = (id, idProveedor, monto, comentario) => {
   );
 };
 
-const deleteRecibo = id => {
+const deleteReceipt = id => {
   return axios.delete(`${BASE_URL}/receipts/${id}`, {
     headers: {
       Authorization: GetAuthHeader()
@@ -58,9 +58,9 @@ const deleteRecibo = id => {
 };
 
 export default {
-  getRecibos,
-  getRecibo,
-  postRecibo,
-  putRecibo,
-  deleteRecibo
+  getReceipts,
+  getReceipt,
+  postReceipt,
+  putReceipt,
+  deleteReceipt
 };

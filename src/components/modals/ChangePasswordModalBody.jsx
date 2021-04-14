@@ -1,38 +1,38 @@
 import React, { Component } from "react";
-import RecibosService from "./../../services/RecibosService";
+import AuthService from "../../services/AuthService";
 import { DEFAULT_ERROR } from "../../utils/constants";
 import $ from "jquery";
 
-class EliminarReciboModalBody extends Component {
-  state = { cargando: false };
+class ChangePasswordModalBody extends Component {
+  state = { loading: false };
 
-  handleConfirmarClick = e => {
-    this.setState({ cargando: true });
+  handleConfirmClick = e => {
+    this.setState({ loading: true });
 
-    RecibosService.deleteRecibo(this.props.recibo.receiptID)
+    AuthService.resetPassword(this.props.user.email)
       .then(res => {
-        if (res.status === 204) {
-          this.props.onReciboDeleted();
-          $("#eliminarReciboModal").modal("hide");
+        if (res.status === 200) {
+          this.props.onPasswordSent();
+          $("#changePasswordModal").modal("hide");
         }
       })
       .catch(err => {
         alert(DEFAULT_ERROR);
       })
       .finally(() => {
-        this.setState({ cargando: false });
+        this.setState({ loading: false });
       });
   };
 
   render() {
-    const { cargando } = this.state;
-    const { receiptID } = this.props.recibo;
+    const { user } = this.props;
+    const { loading } = this.state;
 
     return (
       <React.Fragment>
         <div className="modal-body p-4">
           <span>
-            ¿Estás seguro que quieres eliminar el recibo #<b>{receiptID}</b>?
+            An email will be sent to <b>{user.email}</b>. Are you sure you want to change your password?
           </span>
         </div>
         <div className="modal-footer">
@@ -41,14 +41,14 @@ class EliminarReciboModalBody extends Component {
             className="btn btn-secondary"
             data-dismiss="modal"
           >
-            Cerrar
+            Close
           </button>
           <button
             type="button"
-            className={`btn btn-danger ${cargando ? " disabled" : ""}`}
-            onClick={this.handleConfirmarClick}
+            className={`btn btn-success ${loading ? " disabled" : ""}`}
+            onClick={this.handleConfirmClick}
           >
-            {cargando ? (
+            {loading ? (
               <span
                 className="spinner-border spinner-border-sm mr-2"
                 style={{ marginBottom: 2 }}
@@ -58,7 +58,7 @@ class EliminarReciboModalBody extends Component {
               ""
             )}
 
-            {cargando ? "Eliminando..." : "Eliminar"}
+            {loading ? "Sending..." : "Confirm"}
           </button>
         </div>
       </React.Fragment>
@@ -66,4 +66,4 @@ class EliminarReciboModalBody extends Component {
   }
 }
 
-export default EliminarReciboModalBody;
+export default ChangePasswordModalBody;

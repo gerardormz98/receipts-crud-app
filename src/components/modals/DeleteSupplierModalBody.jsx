@@ -1,38 +1,38 @@
 import React, { Component } from "react";
-import ProveedorService from "./../../services/ProveedorService";
+import SupplierService from "../../services/SupplierService";
 import { DEFAULT_ERROR } from "../../utils/constants";
 import $ from "jquery";
 
-class EliminarProveedorModalBody extends Component {
-  state = { cargando: false };
+class DeleteSupplierModalBody extends Component {
+  state = { loading: false };
 
-  handleConfirmarClick = e => {
-    this.setState({ cargando: true });
+  handleConfirmClick = e => {
+    this.setState({ loading: true });
 
-    ProveedorService.deleteProveedor(this.props.proveedor.supplierID)
+    SupplierService.deleteSupplier(this.props.supplier.supplierID)
       .then(res => {
         if (res.status === 204) {
-          this.props.onProveedorDeleted();
-          $("#eliminarProveedorModal").modal("hide");
+          this.props.onSupplierDeleted();
+          $("#deleteSupplierModal").modal("hide");
         }
       })
       .catch(err => {
         alert(DEFAULT_ERROR);
       })
       .finally(() => {
-        this.setState({ cargando: false });
+        this.setState({ loading: false });
       });
   };
 
   render() {
-    const { cargando } = this.state;
-    const { name } = this.props.proveedor;
+    const { loading } = this.state;
+    const { name } = this.props.supplier;
 
     return (
       <React.Fragment>
         <div className="modal-body p-4">
           <span>
-            ¿Estás seguro que quieres eliminar al proveedor <b>{name}</b>?
+            Are you sure you want to delete the supplier: <b>{name}</b>?
           </span>
         </div>
         <div className="modal-footer">
@@ -41,14 +41,14 @@ class EliminarProveedorModalBody extends Component {
             className="btn btn-secondary"
             data-dismiss="modal"
           >
-            Cerrar
+            Close
           </button>
           <button
             type="button"
-            className={`btn btn-danger ${cargando ? " disabled" : ""}`}
-            onClick={this.handleConfirmarClick}
+            className={`btn btn-danger ${loading ? " disabled" : ""}`}
+            onClick={this.handleConfirmClick}
           >
-            {cargando ? (
+            {loading ? (
               <span
                 className="spinner-border spinner-border-sm mr-2"
                 style={{ marginBottom: 2 }}
@@ -58,7 +58,7 @@ class EliminarProveedorModalBody extends Component {
               ""
             )}
 
-            {cargando ? "Eliminando..." : "Eliminar"}
+            {loading ? "Deleting..." : "Delete"}
           </button>
         </div>
       </React.Fragment>
@@ -66,4 +66,4 @@ class EliminarProveedorModalBody extends Component {
   }
 }
 
-export default EliminarProveedorModalBody;
+export default DeleteSupplierModalBody;

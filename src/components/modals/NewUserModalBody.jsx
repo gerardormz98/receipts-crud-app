@@ -2,22 +2,22 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faKey } from "@fortawesome/free-solid-svg-icons";
 import Validations from "../../utils/validations";
-import FormErrors from "./../FormErrors";
-import UsuarioService from "./../../services/UsuarioService";
+import FormErrors from "../FormErrors";
+import UserService from "../../services/UserService";
 import { DEFAULT_ERROR } from "../../utils/constants";
 import $ from "jquery";
 
-class NuevoReciboModalBody extends Component {
+class NewUserModalBody extends Component {
   state = {
     email: "",
     password: "",
     passwordConfirm: "",
     isAdmin: false,
     formErrors: [],
-    cargando: false
+    loading: false
   };
 
-  handleCorreoChange = e => {
+  handleEmailChange = e => {
     this.setState({
       email: e.target.value
     });
@@ -35,7 +35,7 @@ class NuevoReciboModalBody extends Component {
     });
   };
 
-  handleEsAdminChange = e => {
+  handleIsAdminChange = e => {
     this.setState({
       isAdmin: e.target.checked
     });
@@ -50,18 +50,18 @@ class NuevoReciboModalBody extends Component {
     });
   };
 
-  handleConfirmarClick = e => {
+  handleConfirmClick = e => {
     if (this.formValid()) {
-      this.setState({ cargando: true });
+      this.setState({ loading: true });
 
       const { email, password, isAdmin } = this.state;
 
-      UsuarioService.postUsuario(email, password, isAdmin)
+      UserService.postUser(email, password, isAdmin)
         .then(res => {
           if (res.status === 201) {
-            this.props.onUsuarioAdded();
+            this.props.onUserAdded();
             this.cleanFields();
-            $("#nuevoUsuarioModal").modal("hide");
+            $("#newUserModal").modal("hide");
           }
         })
         .catch(err => {
@@ -71,7 +71,7 @@ class NuevoReciboModalBody extends Component {
           alert(message);
         })
         .finally(() => {
-          this.setState({ cargando: false });
+          this.setState({ loading: false });
         });
     }
   };
@@ -81,37 +81,37 @@ class NuevoReciboModalBody extends Component {
 
     if (!Validations.required(this.state.email))
       formErrors.push({
-        field: "Correo",
-        error: "El correo es requerido."
+        field: "Email",
+        error: "The email is required."
       });
     else if (!Validations.email(this.state.email))
       formErrors.push({
-        field: "Correo",
-        error: "Introduce un correo válido."
+        field: "Email",
+        error: "Please enter a valid email."
       });
 
     if (!Validations.required(this.state.password))
       formErrors.push({
         field: "Password",
-        error: "La contraseña es requerida."
+        error: "The password is required."
       });
     else if (!Validations.minLength(this.state.password, 8))
       formErrors.push({
         field: "Password",
-        error: "La contraseña debe tener mínimo 8 caracteres."
+        error: "The password must be at least 8 characters."
       });
 
     if (!Validations.required(this.state.passwordConfirm))
       formErrors.push({
         field: "Password",
-        error: "Confirma la contraseña."
+        error: "Please confirm the password."
       });
     else if (
       !Validations.stringEquals(this.state.password, this.state.passwordConfirm)
     )
       formErrors.push({
         field: "Password",
-        error: "Las contraseñas no coinciden."
+        error: "The passwords do not match."
       });
 
     this.setState({ formErrors });
@@ -125,7 +125,7 @@ class NuevoReciboModalBody extends Component {
       password,
       passwordConfirm,
       isAdmin,
-      cargando
+      loading
     } = this.state;
 
     return (
@@ -142,11 +142,11 @@ class NuevoReciboModalBody extends Component {
             <input
               type="text"
               className={`form-control ${
-                formErrors.some(e => e.field === "Correo") ? "is-invalid" : ""
+                formErrors.some(e => e.field === "Email") ? "is-invalid" : ""
               }`}
               value={email}
-              placeholder="Correo"
-              onChange={this.handleCorreoChange}
+              placeholder="Email"
+              onChange={this.handleEmailChange}
             />
           </div>
 
@@ -162,7 +162,7 @@ class NuevoReciboModalBody extends Component {
                 formErrors.some(e => e.field === "Password") ? "is-invalid" : ""
               }`}
               value={password}
-              placeholder="Contraseña"
+              placeholder="Password"
               onChange={this.handlePasswordChange}
             />
           </div>
@@ -179,7 +179,7 @@ class NuevoReciboModalBody extends Component {
                 formErrors.some(e => e.field === "Password") ? "is-invalid" : ""
               }`}
               value={passwordConfirm}
-              placeholder="Confirmar contraseña"
+              placeholder="Confirm password"
               onChange={this.handlePasswordConfirmChange}
             />
           </div>
@@ -189,17 +189,16 @@ class NuevoReciboModalBody extends Component {
               className="form-check-input"
               type="checkbox"
               checked={isAdmin}
-              id="checkAdministrador"
-              onChange={this.handleEsAdminChange}
+              id="checkAdmin"
+              onChange={this.handleIsAdminChange}
             />
-            <label className="form-check-label" htmlFor="checkAdministrador">
-              Administrador
+            <label className="form-check-label" htmlFor="checkAdmin">
+              Admin
             </label>
           </div>
 
           <small className="text-secondary d-block pl-4">
-            Los usuarios administradores pueden agregar nuevos usuarios y
-            modificar los catálogos.
+            Admin users can create new users and modify the catalogs.
           </small>
         </div>
         <div className="modal-footer">
@@ -208,14 +207,14 @@ class NuevoReciboModalBody extends Component {
             className="btn btn-secondary"
             data-dismiss="modal"
           >
-            Cerrar
+            Close
           </button>
           <button
             type="button"
-            className={`btn btn-success ${cargando ? " disabled" : ""}`}
-            onClick={this.handleConfirmarClick}
+            className={`btn btn-success ${loading ? " disabled" : ""}`}
+            onClick={this.handleConfirmClick}
           >
-            {cargando ? (
+            {loading ? (
               <span
                 className="spinner-border spinner-border-sm mr-2"
                 style={{ marginBottom: 2 }}
@@ -225,7 +224,7 @@ class NuevoReciboModalBody extends Component {
               ""
             )}
 
-            {cargando ? "Agregando..." : "Agregar"}
+            {loading ? "Creating..." : "Create"}
           </button>
         </div>
       </React.Fragment>
@@ -233,4 +232,4 @@ class NuevoReciboModalBody extends Component {
   }
 }
 
-export default NuevoReciboModalBody;
+export default NewUserModalBody;

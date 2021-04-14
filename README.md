@@ -1,6 +1,6 @@
 # Simple CRUD
 
-**Simple CRUD** es una aplicación web SPA que tiene como objetivo permitir a un usuario llevar un control de sus recibos. Los usuarios pueden ingresar el monto del recibo, comentarios, y elegir la moneda y el proveedor relacionado a cada uno.
+**Simple CRUD** es una aplicación web SPA que tiene como objetivo permitir a un usuario llevar un control de sus recibos. Los usuarios pueden ingresar el monto del recibo, comentarios, y elegir la moneda y el supplier relacionado a cada uno.
 
 Se cuentan con dos roles en la aplicación:
 
@@ -34,5 +34,5 @@ Se cuentan con dos roles en la aplicación:
 - No se pueden registrar ni editar proveedores, monedas ni usuarios con un nombre ya existente.
 - Únicamente los administradores tienen acceso a las páginas de Usuarios y Catálogos.
 - Para resetear la contraseña, el correo del usuario debe ser real debido a que se envía un correo de parte de Firebase.
-- Al eliminar un proveedor o moneda, los recibos ligados a esos objetos permanecen ligados hasta el momento de editarlos.
+- Al eliminar un supplier o moneda, los recibos ligados a esos objetos permanecen ligados hasta el momento de editarlos.
 - Ningún eliminado es físico. El registro permanecerá en la base de datos como "inactivo". Si después se vuelve a insertar un registro de proveedores o monedas con la misma información, se reactivará el existente y retornará el mismo ID.

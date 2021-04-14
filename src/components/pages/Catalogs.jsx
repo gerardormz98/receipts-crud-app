@@ -1,29 +1,29 @@
 import React, { Component } from "react";
-import Proveedores from "./../Proveedores";
-import AuthService from "./../../services/AuthService";
+import Suppliers from "../Suppliers";
+import AuthService from "../../services/AuthService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faListAlt } from "@fortawesome/free-solid-svg-icons";
 
-class Catalogos extends Component {
+class Catalogs extends Component {
   state = {
-    catalogoActual: "Proveedores"
+    currentCatalog: "Suppliers"
   };
 
-  handleCatalogoChange = e => {
-    this.setState({ catalogoActual: e.target.value });
+  handleCatalogChange = e => {
+    this.setState({ currentCatalog: e.target.value });
   };
 
-  renderCatalogoActual() {
-    const { catalogoActual } = this.state;
+  renderCurrentCatalog() {
+    const { currentCatalog } = this.state;
 
-    if (catalogoActual === "Proveedores") {
-      return <Proveedores />;
+    if (currentCatalog === "Suppliers") {
+      return <Suppliers />;
     }
   }
 
   componentDidMount() {
     const user = AuthService.getUserInfo();
-    if (!user.isAdmin) this.props.history.push("/recibos");
+    if (!user.isAdmin) this.props.history.push("/receipts");
   }
 
   render() {
@@ -35,29 +35,29 @@ class Catalogos extends Component {
             size="2x"
             style={{ color: "#343a40" }}
           />
-          <h3 className="mb-0 ml-3">Catálogos</h3>
+          <h3 className="mb-0 ml-3">Catalogs</h3>
         </div>
         <hr />
-        <div className="row seleccionarCatalogo d-flex align-items-center">
+        <div className="row d-flex align-items-center">
           <span className="col-12 col-lg-4 mb-3 mb-lg-0">
-            Selecciona el catálogo que quieras modificar:
+            Select the catalog you want to modify:
           </span>
           <div className="col-12 col-lg-8 ">
             <select
               className="form-control"
-              onChange={this.handleCatalogoChange}
+              onChange={this.handleCatalogChange}
             >
-              <option defaultValue>Proveedores</option>
+              <option defaultValue>Suppliers</option>
             </select>
           </div>
         </div>
 
         <hr className="mb-4" />
 
-        {this.renderCatalogoActual()}
+        {this.renderCurrentCatalog()}
       </React.Fragment>
     );
   }
 }
 
-export default Catalogos;
+export default Catalogs;

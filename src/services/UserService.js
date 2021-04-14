@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BASE_URL, GetAuthHeader } from "../utils/constants";
 
-const getUsuarios = () => {
+const getUsers = () => {
   return axios.get(`${BASE_URL}/users`, {
     headers: {
       Authorization: GetAuthHeader()
@@ -9,7 +9,7 @@ const getUsuarios = () => {
   });
 };
 
-const getUsuario = id => {
+const getUser = id => {
   return axios.get(`${BASE_URL}/users/${id}`, {
     headers: {
       Authorization: GetAuthHeader()
@@ -17,7 +17,7 @@ const getUsuario = id => {
   });
 };
 
-const postUsuario = (email, password, isAdmin) => {
+const postUser = (email, password, isAdmin) => {
   return axios.post(
     `${BASE_URL}/users`,
     {
@@ -33,11 +33,11 @@ const postUsuario = (email, password, isAdmin) => {
   );
 };
 
-const putUsuario = (id, esAdmin) => {
+const putUser = (id, isAdmin) => {
   return axios.put(
     `${BASE_URL}/users/${id}`,
     {
-      esAdmin
+      isAdmin
     },
     {
       headers: {
@@ -47,7 +47,7 @@ const putUsuario = (id, esAdmin) => {
   );
 };
 
-const deleteUsuario = id => {
+const deleteUser = id => {
   return axios.delete(`${BASE_URL}/users/${id}`, {
     headers: {
       Authorization: GetAuthHeader()
@@ -56,9 +56,9 @@ const deleteUsuario = id => {
 };
 
 export default {
-  getUsuario,
-  getUsuarios,
-  postUsuario,
-  putUsuario,
-  deleteUsuario
+  getUser,
+  getUsers,
+  postUser,
+  putUser,
+  deleteUser
 };

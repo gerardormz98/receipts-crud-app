@@ -1,40 +1,38 @@
 import React, { Component } from "react";
-import AuthService from "../../services/AuthService";
+import ReceiptsService from "../../services/ReceiptsService";
 import { DEFAULT_ERROR } from "../../utils/constants";
 import $ from "jquery";
 
-class CambiarPasswordModalBody extends Component {
-  state = { cargando: false };
+class DeleteReceiptModalBody extends Component {
+  state = { loading: false };
 
-  handleConfirmarClick = e => {
-    this.setState({ cargando: true });
+  handleConfirmClick = e => {
+    this.setState({ loading: true });
 
-    AuthService.resetPassword(this.props.usuario.email)
+    ReceiptsService.deleteReceipt(this.props.receipt.receiptID)
       .then(res => {
-        if (res.status === 200) {
-          this.props.onPasswordSent();
-          $("#cambiarPasswordModal").modal("hide");
+        if (res.status === 204) {
+          this.props.onReceiptDeleted();
+          $("#deleteReceiptModal").modal("hide");
         }
       })
       .catch(err => {
         alert(DEFAULT_ERROR);
       })
       .finally(() => {
-        this.setState({ cargando: false });
+        this.setState({ loading: false });
       });
   };
 
   render() {
-    const { usuario } = this.props;
-    const { cargando } = this.state;
+    const { loading } = this.state;
+    const { receiptID } = this.props.receipt;
 
     return (
       <React.Fragment>
         <div className="modal-body p-4">
           <span>
-            Para cambiar tu contraseña, se te enviará un correo a{" "}
-            <b>{usuario.email}</b> ¿Estás seguro de que quieres cambiar tu
-            contraseña?
+            Are you sure you want to delete the receipt #<b>{receiptID}</b>?
           </span>
         </div>
         <div className="modal-footer">
@@ -43,14 +41,14 @@ class CambiarPasswordModalBody extends Component {
             className="btn btn-secondary"
             data-dismiss="modal"
           >
-            Cerrar
+            Close
           </button>
           <button
             type="button"
-            className={`btn btn-success ${cargando ? " disabled" : ""}`}
-            onClick={this.handleConfirmarClick}
+            className={`btn btn-danger ${loading ? " disabled" : ""}`}
+            onClick={this.handleConfirmClick}
           >
-            {cargando ? (
+            {loading ? (
               <span
                 className="spinner-border spinner-border-sm mr-2"
                 style={{ marginBottom: 2 }}
@@ -60,7 +58,7 @@ class CambiarPasswordModalBody extends Component {
               ""
             )}
 
-            {cargando ? "Enviando..." : "Confirmar"}
+            {loading ? "Deleting..." : "Delete"}
           </button>
         </div>
       </React.Fragment>
@@ -68,4 +66,4 @@ class CambiarPasswordModalBody extends Component {
   }
 }
 
-export default CambiarPasswordModalBody;
+export default DeleteReceiptModalBody;

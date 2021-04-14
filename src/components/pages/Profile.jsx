@@ -1,33 +1,33 @@
 import React, { Component } from "react";
-import AuthService from "./../../services/AuthService";
-import CambiarPasswordModalBody from "./../modals/CambiarPasswordModalBody";
-import Modal from "./../modals/Modal";
+import AuthService from "../../services/AuthService";
+import ChangePasswordModalBody from "../modals/ChangePasswordModalBody";
+import Modal from "../modals/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
-class Perfil extends Component {
+class Profile extends Component {
   state = {
-    usuario: {
+    user: {
       isAdmin: false,
       email: ""
     },
-    mensaje: ""
+    message: ""
   };
 
   componentDidMount() {
-    const usuario = AuthService.getUserInfo();
-    this.setState({ usuario });
+    const user = AuthService.getUserInfo();
+    this.setState({ user });
   }
 
   handlePasswordSent = () => {
     this.setState({
-      mensaje:
-        "Se te ha enviado un correo con las instrucciones para el cambio de contraseña. Por favor, revisa tu bandeja de entrada."
+      message:
+        "An email was sent with the directions to change your password. Please check your inbox."
     });
   };
 
   render() {
-    const { isAdmin, email } = this.state.usuario;
+    const { isAdmin, email } = this.state.user;
 
     return (
       <React.Fragment>
@@ -37,21 +37,21 @@ class Perfil extends Component {
             size="2x"
             style={{ color: "#343a40" }}
           />
-          <h3 className="mb-0 ml-3">Mi perfil</h3>
+          <h3 className="mb-0 ml-3">My profile</h3>
         </div>
         <hr />
 
         <div className="mb-3">
-          <span>Rol actual: </span>
+          <span>Current role: </span>
           <span
             className={`badge badge-${isAdmin ? "success" : "primary"} ml-3`}
           >
-            {isAdmin ? "Administrador" : "Usuario"}
+            {isAdmin ? "Admin" : "User"}
           </span>
         </div>
 
         <div className="d-flex align-items-center mb-3">
-          <span className="align-middle">Usuario: </span>
+          <span className="align-middle">User: </span>
           <div className="input-group ml-3">
             <div className="input-group-prepend">
               <div className="input-group-text">@</div>
@@ -69,20 +69,20 @@ class Perfil extends Component {
         <input
           type="button"
           className="btn btn-sm btn-danger"
-          value="Cambiar contraseña"
+          value="Change password"
           data-toggle="modal"
-          data-target="#cambiarPasswordModal"
+          data-target="#changePasswordModal"
         ></input>
 
-        <p className="mt-3">{this.state.mensaje}</p>
+        <p className="mt-3">{this.state.message}</p>
 
         <Modal
-          modalId="cambiarPasswordModal"
-          modalTitle="Cambiar contraseña"
+          modalId="changePasswordModal"
+          modalTitle="Change password"
           modalBody={
-            <CambiarPasswordModalBody
+            <ChangePasswordModalBody
               onPasswordSent={this.handlePasswordSent}
-              usuario={this.state.usuario}
+              user={this.state.user}
             />
           }
         />
@@ -91,4 +91,4 @@ class Perfil extends Component {
   }
 }
 
-export default Perfil;
+export default Profile;

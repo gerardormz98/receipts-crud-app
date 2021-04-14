@@ -12,11 +12,11 @@ import ForgotPasswordModalBody from "./../modals/ForgotPasswordModalBody";
 
 class Login extends Component {
   state = {
-    correo: "",
+    email: "",
     password: "",
     message: "",
     formErrors: [],
-    cargando: false
+    loading: false
   };
 
   componentDidMount() {
@@ -30,9 +30,9 @@ class Login extends Component {
     });
   };
 
-  handleCorreoChange = e => {
+  handleEmailChange = e => {
     this.setState({
-      correo: e.target.value
+      email: e.target.value
     });
   };
 
@@ -41,14 +41,14 @@ class Login extends Component {
     this.hideErrorAlert();
 
     if (this.formValid()) {
-      this.setState({ cargando: true });
+      this.setState({ loading: true });
 
-      AuthService.login(this.state.correo, this.state.password)
+      AuthService.login(this.state.email, this.state.password)
         .then(res => {
           if (res.status === 200) {
             localStorage.setItem("auth", JSON.stringify(res.data));
             this.props.onLogin();
-            this.props.history.push("/recibos");
+            this.props.history.push("/receipts");
           } else {
             throw new Error();
           }
@@ -58,37 +58,37 @@ class Login extends Component {
          	  if (err.response.data.message)
               this.setState({ message: err.response.data.message });
             else if (err.response.data.errors)
-              this.setState({ message: "Verifica los datos ingresados." });
+              this.setState({ message: "Please verify the entered data." });
           }
           else {
             this.setState({ message: DEFAULT_ERROR });
           }
 
-          this.setState({ cargando: false });
+          this.setState({ loading: false });
           this.showErrorAlert();
         });
     }
   };
 
   formValid() {
-    const { correo, password } = this.state;
+    const { email, password } = this.state;
     let formErrors = [];
 
-    if (!Validations.required(correo))
+    if (!Validations.required(email))
       formErrors.push({
-        field: "Correo",
-        error: "El correo es requerido."
+        field: "Email",
+        error: "The email is required."
       });
-    else if (!Validations.email(correo))
+    else if (!Validations.email(email))
       formErrors.push({
-        field: "Correo",
-        error: "Introduce un correo válido."
+        field: "Email",
+        error: "Please enter a valid email."
       });
 
     if (!Validations.required(password))
       formErrors.push({
-        field: "Contraseña",
-        error: "La contraseña es requerida."
+        field: "Password",
+        error: "The passowrd is required."
       });
 
     this.setState({ formErrors });
@@ -96,15 +96,15 @@ class Login extends Component {
   }
 
   showErrorAlert() {
-    $("#alertError").show();
+    $("#errorAlert").show();
   }
 
   hideErrorAlert() {
-    $("#alertError").hide();
+    $("#errorAlert").hide();
   }
 
   render() {
-    const { correo, password, message, formErrors, cargando } = this.state;
+    const { email, password, message, formErrors, loading } = this.state;
 
     return (
       <React.Fragment>
@@ -125,7 +125,7 @@ class Login extends Component {
 
             <FormErrors errors={formErrors} />
 
-            <div id="alertError" className="alert alert-danger" role="alert">
+            <div id="errorAlert" className="alert alert-danger" role="alert">
               <small>
                 <strong>Error: </strong>
                 {message}
@@ -142,13 +142,13 @@ class Login extends Component {
                 <input
                   type="text"
                   className={`form-control ${
-                    formErrors.some(e => e.field === "Correo")
+                    formErrors.some(e => e.field === "Email")
                       ? "is-invalid"
                       : ""
                   }`}
-                  placeholder="Correo"
-                  value={correo}
-                  onChange={this.handleCorreoChange}
+                  placeholder="Email"
+                  value={email}
+                  onChange={this.handleEmailChange}
                   autoFocus
                 />
               </div>
@@ -162,11 +162,11 @@ class Login extends Component {
                 <input
                   type="password"
                   className={`form-control ${
-                    formErrors.some(e => e.field === "Contraseña")
+                    formErrors.some(e => e.field === "Password")
                       ? "is-invalid"
                       : ""
                   }`}
-                  placeholder="Contraseña"
+                  placeholder="Password"
                   value={password}
                   onChange={this.handlePasswordChange}
                 />
@@ -175,10 +175,10 @@ class Login extends Component {
               <button
                 type="submit"
                 className={`btn btn-primary btn-block rounded-pill ${
-                  cargando ? "btn-secondary disabled" : ""
+                  loading ? "btn-secondary disabled" : ""
                 }`}
               >
-                {cargando ? (
+                {loading ? (
                   <span
                     className="spinner-border spinner-border-sm mr-2"
                     style={{ marginBottom: 2 }}
@@ -188,7 +188,7 @@ class Login extends Component {
                   ""
                 )}
 
-                {cargando ? "Iniciando sesión..." : "Iniciar Sesión"}
+                {loading ? "Signing in..." : "Sign in"}
               </button>
             </form>
 
@@ -199,16 +199,16 @@ class Login extends Component {
               className="btn btn-link btn-sm ml-auto"
               data-toggle="modal"
               data-target="#forgotPasswordModal"
-              disabled={cargando}
+              disabled={loading}
             >
-              ¿Olvidaste tu contraseña?
+              Forgot password?
             </button>
           </div>
         </div>
 
         <Modal
           modalId="forgotPasswordModal"
-          modalTitle="Recuperar contraseña"
+          modalTitle="Password recovery"
           modalBody={<ForgotPasswordModalBody />}
         />
       </React.Fragment>

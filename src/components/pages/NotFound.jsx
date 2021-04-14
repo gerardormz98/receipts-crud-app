@@ -18,9 +18,9 @@ class NotFound extends Component {
           className="mb-5"
         />
         <p className="h1">404 - Not found</p>
-        <p>La página que solicitas no fue encontrada.</p>
-        <Link to="/recibos">
-          <button className="btn btn-link">Regresar a Mis Recibos</button>
+        <p>The requested page was not found.</p>
+        <Link to="/receipts">
+          <button className="btn btn-link">Go back to my receipts</button>
         </Link>
       </div>
     );

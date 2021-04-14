@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BASE_URL, GetAuthHeader } from "../utils/constants";
 
-const getProveedores = () => {
+const getSuppliers = () => {
   return axios.get(`${BASE_URL}/suppliers`, {
     headers: {
       Authorization: GetAuthHeader()
@@ -9,7 +9,7 @@ const getProveedores = () => {
   });
 };
 
-const getProveedor = id => {
+const getSupplier = id => {
   return axios.get(`${BASE_URL}/suppliers/${id}`, {
     headers: {
       Authorization: GetAuthHeader()
@@ -17,7 +17,7 @@ const getProveedor = id => {
   });
 };
 
-const postProveedor = (nombre, telefono) => {
+const postSupplier = (nombre, telefono) => {
   return axios.post(
     `${BASE_URL}/suppliers`,
     {
@@ -32,7 +32,7 @@ const postProveedor = (nombre, telefono) => {
   );
 };
 
-const putProveedor = (id, nombre, telefono) => {
+const putSupplier = (id, nombre, telefono) => {
   return axios.put(
     `${BASE_URL}/suppliers/${id}`,
     {
@@ -47,7 +47,7 @@ const putProveedor = (id, nombre, telefono) => {
   );
 };
 
-const deleteProveedor = id => {
+const deleteSupplier = id => {
   return axios.delete(`${BASE_URL}/suppliers/${id}`, {
     headers: {
       Authorization: GetAuthHeader()
@@ -56,9 +56,9 @@ const deleteProveedor = id => {
 };
 
 export default {
-  getProveedores,
-  getProveedor,
-  postProveedor,
-  putProveedor,
-  deleteProveedor
+  getSuppliers,
+  getSupplier,
+  postSupplier,
+  putSupplier,
+  deleteSupplier
 };

@@ -1,42 +1,42 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import UsuarioService from "../../services/UsuarioService";
+import UserService from "../../services/UserService";
 import AuthService from "../../services/AuthService";
 import { DEFAULT_ERROR } from "../../utils/constants";
 import $ from "jquery";
 
-class EditarUsuarioModalBody extends Component {
+class EditUserModalBody extends Component {
   state = {
     email: "",
     isAdmin: "",
-    cargando: false
+    loading: false
   };
 
-  handleEsAdminChange = e => {
+  handleIsAdminChange = e => {
     this.setState({
       isAdmin: e.target.checked
     });
   };
 
-  handleConfirmarClick = e => {
-    this.setState({ cargando: true });
+  handleConfirmClick = e => {
+    this.setState({ loading: true });
 
     const user = AuthService.getUserInfo();
 
     if (user.email === this.state.email) {
-      alert("No puedes editar tu propio usuario administrador.");
-      $("#editarUsuarioModal").modal("hide");
-      this.setState({ cargando: false });
+      alert("You can't edit your own admin user.");
+      $("#editUserModal").modal("hide");
+      this.setState({ loading: false });
     } else {
       const { isAdmin } = this.state;
-      const { userID } = this.props.usuario;
+      const { userID } = this.props.user;
 
-      UsuarioService.putUsuario(userID, isAdmin)
+      UserService.putUser(userID, isAdmin)
         .then(res => {
           if (res.status === 200) {
-            this.props.onUsuarioEdited();
-            $("#editarUsuarioModal").modal("hide");
+            this.props.onUserEdited();
+            $("#editUserModal").modal("hide");
           }
         })
         .catch(err => {
@@ -46,22 +46,22 @@ class EditarUsuarioModalBody extends Component {
           alert(message);
         })
         .finally(() => {
-          this.setState({ cargando: false });
+          this.setState({ loading: false });
         });
     }
   };
 
   componentDidUpdate(prevProps) {
-    if (this.props.usuario !== prevProps.usuario) {
+    if (this.props.user !== prevProps.user) {
       this.setState({
-        email: this.props.usuario.email,
-        isAdmin: this.props.usuario.isAdmin
+        email: this.props.user.email,
+        isAdmin: this.props.user.isAdmin
       });
     }
   }
 
   render() {
-    const { email, isAdmin, cargando } = this.state;
+    const { email, isAdmin, loading } = this.state;
 
     return (
       <React.Fragment>
@@ -76,7 +76,7 @@ class EditarUsuarioModalBody extends Component {
               type="text"
               className="form-control"
               value={email}
-              placeholder="Correo"
+              placeholder="Email"
               readOnly
             />
           </div>
@@ -86,20 +86,19 @@ class EditarUsuarioModalBody extends Component {
               className="form-check-input"
               type="checkbox"
               checked={isAdmin}
-              id="checkAdministradorEditar"
-              onChange={this.handleEsAdminChange}
+              id="checkAdminEdit"
+              onChange={this.handleIsAdminChange}
             />
             <label
               className="form-check-label"
-              htmlFor="checkAdministradorEditar"
+              htmlFor="checkAdminEdit"
             >
-              Administrador
+              Admin
             </label>
           </div>
 
           <small className="text-secondary d-block pl-4">
-            Los usuarios administradores pueden agregar nuevos usuarios y
-            modificar los catálogos.
+            Admin users can create new users and modify the catalogs.
           </small>
         </div>
         <div className="modal-footer">
@@ -108,14 +107,14 @@ class EditarUsuarioModalBody extends Component {
             className="btn btn-secondary"
             data-dismiss="modal"
           >
-            Cerrar
+            Close
           </button>
           <button
             type="button"
-            className={`btn btn-info ${cargando ? " disabled" : ""}`}
-            onClick={this.handleConfirmarClick}
+            className={`btn btn-info ${loading ? " disabled" : ""}`}
+            onClick={this.handleConfirmClick}
           >
-            {cargando ? (
+            {loading ? (
               <span
                 className="spinner-border spinner-border-sm mr-2"
                 style={{ marginBottom: 2 }}
@@ -125,7 +124,7 @@ class EditarUsuarioModalBody extends Component {
               ""
             )}
 
-            {cargando ? "Editando..." : "Editar"}
+            {loading ? "Editing..." : "Edit"}
           </button>
         </div>
       </React.Fragment>
@@ -133,4 +132,4 @@ class EditarUsuarioModalBody extends Component {
   }
 }
 
-export default EditarUsuarioModalBody;
+export default EditUserModalBody;

@@ -2,34 +2,34 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import Validations from "../../utils/validations";
-import FormErrors from "./../FormErrors";
-import ProveedorDropdown from "./../ProveedorDropdown";
-import RecibosService from "./../../services/RecibosService";
+import FormErrors from "../FormErrors";
+import SupplierDropdown from "../SupplierDropdown";
+import ReceiptsService from "../../services/ReceiptsService";
 import { DEFAULT_ERROR } from "../../utils/constants";
 import $ from "jquery";
 
-class NuevoReciboModalBody extends Component {
+class NewReceiptModalBody extends Component {
   state = {
     amount: "",
     comments: "",
     supplier: "",
     formErrors: [],
-    cargando: false
+    loading: false
   };
 
-  handleMontoChange = e => {
+  handleAmountChange = e => {
     this.setState({
       amount: e.target.value
     });
   };
 
-  handleComentarioChange = e => {
+  handleCommentsChange = e => {
     this.setState({
       comments: e.target.value
     });
   };
 
-  handleProveedorChange = e => {
+  handleSupplierChange = e => {
     let value = "";
 
     if (typeof e === "number" || typeof e === "string") value = e;
@@ -44,25 +44,25 @@ class NuevoReciboModalBody extends Component {
     this.setState({ amount: "", comments: "" });
   };
 
-  handleConfirmarClick = e => {
+  handleConfirmClick = e => {
     if (this.formValid()) {
-      this.setState({ cargando: true });
+      this.setState({ loading: true });
 
       const { supplier, amount, comments } = this.state;
 
-      RecibosService.postRecibo(supplier, amount, comments)
+      ReceiptsService.postReceipt(supplier, amount, comments)
         .then(res => {
           if (res.status === 201) {
-            this.props.onReciboAdded();
+            this.props.onReceiptAdded();
             this.cleanFields();
-            $("#nuevoReciboModal").modal("hide");
+            $("#newReceiptModal").modal("hide");
           }
         })
         .catch(err => {
           alert(DEFAULT_ERROR);
         })
         .finally(() => {
-          this.setState({ cargando: false });
+          this.setState({ loading: false });
         });
     }
   };
@@ -72,25 +72,25 @@ class NuevoReciboModalBody extends Component {
 
     if (!Validations.required(this.state.amount))
       formErrors.push({
-        field: "Monto",
-        error: "El monto es requerido."
+        field: "Amount",
+        error: "The amount is required."
       });
     else if (!Validations.numeric(this.state.amount))
       formErrors.push({
-        field: "Monto",
-        error: "Introduce un monto numérico."
+        field: "Amount",
+        error: "Please enter a numeric amount."
       });
 
     if (!Validations.required(this.state.supplier))
       formErrors.push({
-        field: "Proveedor",
-        error: "Debes elegir un proveedor."
+        field: "Supplier",
+        error: "You must choose a supplier."
       });
 
     if (!Validations.required(this.state.comments))
       formErrors.push({
-        field: "Comentario",
-        error: "El comentario es requerido."
+        field: "Comments",
+        error: "A comment is required."
       });
 
     this.setState({ formErrors });
@@ -98,7 +98,7 @@ class NuevoReciboModalBody extends Component {
   }
 
   render() {
-    const { formErrors, amount, comments, cargando } = this.state;
+    const { formErrors, amount, comments, loading } = this.state;
 
     return (
       <React.Fragment>
@@ -113,28 +113,28 @@ class NuevoReciboModalBody extends Component {
             <input
               type="text"
               className={`form-control ${
-                formErrors.some(e => e.field === "Monto") ? "is-invalid" : ""
+                formErrors.some(e => e.field === "Amount") ? "is-invalid" : ""
               }`}
               value={amount}
-              placeholder="Monto"
-              onChange={this.handleMontoChange}
+              placeholder="Amount"
+              onChange={this.handleAmountChange}
             />
           </div>
 
-          <ProveedorDropdown
-            onProveedorChange={this.handleProveedorChange}
-            onLoadValues={this.handleProveedorChange}
-            hasErrors={formErrors.some(e => e.field === "Proveedor")}
+          <SupplierDropdown
+            onSupplierChange={this.handleSupplierChange}
+            onLoadValues={this.handleSupplierChange}
+            hasErrors={formErrors.some(e => e.field === "Supplier")}
           />
 
           <textarea
             className={`form-control ${
-              formErrors.some(e => e.field === "Comentario") ? "is-invalid" : ""
+              formErrors.some(e => e.field === "Comments") ? "is-invalid" : ""
             }`}
             rows="4"
-            placeholder="Comentario..."
+            placeholder="Comments..."
             value={comments}
-            onChange={this.handleComentarioChange}
+            onChange={this.handleCommentsChange}
           ></textarea>
         </div>
         <div className="modal-footer">
@@ -143,14 +143,14 @@ class NuevoReciboModalBody extends Component {
             className="btn btn-secondary"
             data-dismiss="modal"
           >
-            Cerrar
+            Close
           </button>
           <button
             type="button"
-            className={`btn btn-success ${cargando ? " disabled" : ""}`}
-            onClick={this.handleConfirmarClick}
+            className={`btn btn-success ${loading ? " disabled" : ""}`}
+            onClick={this.handleConfirmClick}
           >
-            {cargando ? (
+            {loading ? (
               <span
                 className="spinner-border spinner-border-sm mr-2"
                 style={{ marginBottom: 2 }}
@@ -160,7 +160,7 @@ class NuevoReciboModalBody extends Component {
               ""
             )}
 
-            {cargando ? "Agregando..." : "Agregar"}
+            {loading ? "Creating..." : "Create"}
           </button>
         </div>
       </React.Fragment>
@@ -168,4 +168,4 @@ class NuevoReciboModalBody extends Component {
   }
 }
 
-export default NuevoReciboModalBody;
+export default NewReceiptModalBody;

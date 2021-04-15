@@ -119,11 +119,11 @@ class Login extends Component {
 								<hr />
 								<p>Receipts App is a simple CRUD web app built with React framework.</p>
 								<p>This project integrates multiple technologies, such as React, Firebase, .NET Core, EF Core, etc. Feel free to explore it.</p>
-								<button className="btn btn-light btn-block rounded-pill">Learn more</button>
+								<a  href="https://github.com/gerardormz98/simple-crud-app" target="_blank" rel="noopener noreferrer" className="btn btn-light btn-block rounded-pill">Learn more</a>
 
 								<div className="social-links mt-4">
-									<a href="" className="socials-badge rounded-circle"><FontAwesomeIcon icon={faGithub} /></a>
-									<a href="" className="socials-badge rounded-circle"><FontAwesomeIcon icon={faLinkedin} /></a>
+									<a href="https://github.com/gerardormz98/" target="_blank" rel="noopener noreferrer" className="socials-badge rounded-circle"><FontAwesomeIcon icon={faGithub} /></a>
+									<a href="https://www.linkedin.com/in/grmz98/" target="_blank" rel="noopener noreferrer" className="socials-badge rounded-circle"><FontAwesomeIcon icon={faLinkedin} /></a>
 								</div>
 							</div>
 						</div>
@@ -136,7 +136,7 @@ class Login extends Component {
 										className="login-form__logo mr-3 mb-2"
 										alt=""
 									></img>
-									<h3>Login</h3>
+									<h3>Sign In</h3>
 								</div>
 								<hr className="mb-4" />
 

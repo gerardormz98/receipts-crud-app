@@ -1,6 +1,6 @@
 {
   "short_name": "Receipts CRUD",
-  "name": "Simple Receipts CRUD App",
+  "name": "Simple Receipts CRUD Web App",
   "icons": [
     {
       "src": "favicon.ico",

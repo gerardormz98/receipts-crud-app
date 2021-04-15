@@ -10,7 +10,56 @@
   transform: scale(1.1);
 }
 
-.imgLogin {
-  width: 50px;
+.login-form {
+  display: flex;
+  border-radius: 20px;
+  box-shadow: 0px 7px 13px 2px rgba(0,0,0,0.2);
+  height: 60vh;
+}
+
+.login-form__info {
+  background-color: #007578;
+  padding: 4rem 5rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  border-radius: 20px 0 0 20px;
+  width: 40%;
+}
+
+.login-form__form {
+  padding: 4rem 8rem;
+  background-color: white;
+  border-radius: 0 20px 20px 0;
+  width: 60%;
+  display: flex;
+  align-items: center;
+}
+
+.login-form__logo {
+  width: 40px;
   height: 40px;
+}
+
+.social-links {
+  display: flex;
+  align-items:center;
+  justify-content: center;
+}
+
+.socials-badge {
+  width: 50px;
+  height: 50px;
+  margin: 0 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:#F8F9FA;
+  font-size: 23px;
+  color: #6f757a;
+}
+
+.socials-badge:hover {
+  background:#E9ECEF;
+  color: #212529;
 }

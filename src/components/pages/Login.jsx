@@ -113,10 +113,10 @@ class Login extends Component {
 
 				<div className="vh-100 d-flex justify-content-center align-items-center">
 					<div className="login-form">
-						<div className="login-form__info">
+						<div className="d-none d-lg-flex login-form__info">
 							<div className="w-100">
 								<h3>Receipts App</h3>
-								<hr />
+								<hr className="login-form__info-separator my-4" />
 								<p>Receipts App is a simple CRUD web app built with React framework.</p>
 								<p>This project integrates multiple technologies, such as React, Firebase, .NET Core, EF Core, etc. Feel free to explore it.</p>
 								<a  href="https://github.com/gerardormz98/simple-crud-app" target="_blank" rel="noopener noreferrer" className="btn btn-light btn-block rounded-pill">Learn more</a>
@@ -138,7 +138,7 @@ class Login extends Component {
 									></img>
 									<h3>Sign In</h3>
 								</div>
-								<hr className="mb-4" />
+								<hr className="login-form__form-separator mb-4" />
 
 								<FormErrors errors={formErrors} />
 

@@ -5,9 +5,10 @@
   z-index: -1;
   display: block;
   background-image: url("/img/login-background.jpg");
-  background-size: cover;
-  filter: blur(5px);
+  filter: blur(8px);
   transform: scale(1.1);
+  background-position: 0px 0px;
+  animation: animatedBackground 40s linear infinite alternate;
 }
 
 .login-form {
@@ -15,6 +16,7 @@
   border-radius: 20px;
   box-shadow: 0px 7px 13px 2px rgba(0,0,0,0.2);
   height: 60vh;
+  min-height: 550px;
 }
 
 .login-form__info {
@@ -24,21 +26,33 @@
   display: flex;
   align-items: center;
   border-radius: 20px 0 0 20px;
-  width: 40%;
 }
 
 .login-form__form {
-  padding: 4rem 8rem;
+  padding: 4rem 2rem;
   background-color: white;
-  border-radius: 0 20px 20px 0;
-  width: 60%;
+  border-radius: 20px;
+  width: 100%;
   display: flex;
   align-items: center;
 }
 
 .login-form__logo {
+  width: 50px;
+  height: 50px;
+}
+
+.login-form__info-separator {
   width: 40px;
-  height: 40px;
+  border-width: 3px;
+  border-color: white;
+  margin-left: 0;
+}
+
+.login-form__form-separator {
+  width: 40px;
+  border-width: 3px;
+  border-color: #007578;;
 }
 
 .social-links {
@@ -62,4 +76,41 @@
 .socials-badge:hover {
   background:#E9ECEF;
   color: #212529;
+}
+
+@keyframes animatedBackground {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 100% 0;
+  }
+}
+
+/*-------------------
+    Media Queries
+--------------------/*
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {  
+  .login-form__form {
+    padding: 4rem 4rem;
+  }
+}
+ 
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+  .login-form__logo {
+    margin-left: -57px;
+  }
+
+  .login-form__info {
+    width: 40%;
+  }
+  
+  .login-form__form {
+    padding: 4rem 8rem;
+    border-radius: 0 20px 20px 0;
+    width: 60%;
+  }
 }

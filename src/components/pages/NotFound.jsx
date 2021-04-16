@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUnlink } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import "./NotFound.css";
 
 class NotFound extends Component {
   state = {};
@@ -9,17 +8,13 @@ class NotFound extends Component {
   render() {
     return (
       <div className="w-100 d-flex flex-column align-items-center mt-5">
-        <FontAwesomeIcon
-          style={{
-            color: "lightgray"
-          }}
-          icon={faUnlink}
-          size="10x"
-          className="mb-5"
+        <img 
+          src="img/sad-dog.png"
+          className="not-found__image"
         />
-        <p className="h1">404 - Not found</p>
+        <p className="h1 text-center">404 - Not found</p>
         <p>The requested page was not found.</p>
-        <Link to="/receipts">
+        <Link to="/receipts" className="mb-4">
           <button className="btn btn-link">Go back to my receipts</button>
         </Link>
       </div>

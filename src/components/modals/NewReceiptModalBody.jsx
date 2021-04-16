@@ -80,6 +80,12 @@ class NewReceiptModalBody extends Component {
         field: "Amount",
         error: "Please enter a numeric amount."
       });
+    else if (this.state.amount < 1) {
+      formErrors.push({
+        field: "Amount",
+        error: "Amount should be greater than 0."
+      });
+    }
 
     if (!Validations.required(this.state.supplier))
       formErrors.push({
@@ -111,7 +117,7 @@ class NewReceiptModalBody extends Component {
               </div>
             </div>
             <input
-              type="text"
+              type="number"
               className={`form-control ${
                 formErrors.some(e => e.field === "Amount") ? "is-invalid" : ""
               }`}

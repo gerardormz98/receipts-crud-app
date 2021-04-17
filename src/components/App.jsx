@@ -6,6 +6,7 @@ import Catalogs from "./pages/Catalogs";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
+import Footer from "./Footer";
 import {
   BrowserRouter as Router,
   Switch,
@@ -45,7 +46,7 @@ class App extends Component {
     ) : null;
 
     let mainContainerClass = "container";
-    mainContainerClass += isLoggedIn ? " p-4" : "";
+    mainContainerClass += isLoggedIn ? " py-4" : "";
 
     return (
       <Router>
@@ -89,6 +90,7 @@ class App extends Component {
             />
           </Switch>
         </main>
+        { isLoggedIn && <Footer /> }
       </Router>
     );
   }

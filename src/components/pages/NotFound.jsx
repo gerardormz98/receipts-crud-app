@@ -11,6 +11,7 @@ class NotFound extends Component {
         <img 
           src="img/sad-dog.png"
           className="not-found__image"
+          alt="Not Found"
         />
         <p className="h1 text-center">404 - Not found</p>
         <p>The requested page was not found.</p>

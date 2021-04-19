@@ -1,38 +1,38 @@
-# Simple CRUD
+# Receipts CRUD
 
-**Simple CRUD** es una aplicación web SPA que tiene como objetivo permitir a un usuario llevar un control de sus recibos. Los usuarios pueden ingresar el monto del recibo, comentarios, y elegir la moneda y el supplier relacionado a cada uno.
+**Receipts CRUD** is a web SPA that allows a user to track their receipts. Users can enter the amount of the receipt, comments and choose the supplier of each one.
 
-Se cuentan con dos roles en la aplicación:
+There are two roles in the app:
 
-- **Usuario**: Tiene acceso a la página de Recibos y Perfil. Puede solamente dar de alta, editar y eliminar recibos.
-- **Administrador**: Tiene acceso a la página de Recibos, Usuarios, Catálogos y Perfil. Además de poder manejar recibos, los administradores pueden agregar, editar y eliminar usuarios, proveedores, y monedas.
+- **User**: They have access to the Receipts and Profile pages. They can only create, edit, and update receipts.
+- **Admin**: They have access to the Receipts, Profile, Users and Catalogs pages. In addition to being able to handle receipts, admins can add, edit and delete users and suppliers.
 
-## URL de la aplicación
+## URL
 
-*Pending*
+https://receipts-crud.herokuapp.com/
 
-**NOTA**: La primera vez, el login puede tardar un poco en cargar (10 segundos aprox.). Esto es debido a que la aplicación en Azure se encuentra inhabilitada cuando no se está usando. Es una limitación del plan gratuito.
+**NOTA**: The first time, the application and the login can take a little bit to load. This is because the Azure/Heroku hosting is shut down when it is not being used. This is a limitation of the free hosting plan.
 
-## Tecnologías y dependencias utilizadas
+## Technologies and dependencies
 
-- **React JS**: Librería utilizada para el desarrollo del front-end.
-- **Azure Storage**: La aplicación se encuentra hosteada en los servidores de Azure. Se decidió utilizar Azure Storage en vez de App Services debido a que es un sitio web estático.
-- **Bootstrap 4.4**: Se utilizó este framework de CSS para la UI y el diseño responsive de la aplicación.
-- **JQuery**: JQuery fue utilizado principalmente para manejar componentes de Bootstrap manualmente.
-- **MDB Datatable**: MDB es un kit de componentes de UI. En esta aplicación, utilizamos el componente Datatable para mostrar los datos y brindar la funcionalidad de búsqueda y paginación de manera rápida.
-- **Validation.js**: Se utilizó para validar fácilmente los inputs del usuario, con reglas como: es email, es valor numérico, etc.
-- **Axios**: Axios fue utilizado para realizar las llamadas al WebAPI y manejar los promises fácilmente.
-- **Font Awesome**: Todos los íconos variados que podemos encontrar en la aplicación son parte de esta librería de CSS.
-- **Moment.js**: Se utilizó para dar formato de fecha en algunas tablas.
+- **React JS**: Frontend library.
+- **Heroku**: The web app is hosted in Heroku servers.
+- **Bootstrap 4.4**: CSS framework for UI responsive design.
+- **JQuery**: JQuery was used to manually handle Bootstrap components.
+- **MDB Datatable**: MDB is a UI components kit. In this app, I used the Datatable component to show the data, which includes the search and pagination features out of the box.
+- **Validation.js**: This library was used to easily validate user inputs, having rules such as: is email, is numeric value, etc.
+- **Axios**: Axios was used to send requests to the web API and to easily handle promises.
+- **Font Awesome**: All the icons that you can find in the app belong to this CSS library.
+- **Moment.js**: This library was used to format the dates in some tables.
 
-## Reglas y validaciones
+## Rules and validations
 
-- Todos los campos son requeridos.
-- Nombres y teléfonos de catálogos pueden ser números o letras.
-- Los teléfonos son de máx. 10 caracteres.
-- Los administradores no pueden editar ni eliminar su propio usuario.
-- No se pueden registrar ni editar proveedores, monedas ni usuarios con un nombre ya existente.
-- Únicamente los administradores tienen acceso a las páginas de Usuarios y Catálogos.
-- Para resetear la contraseña, el correo del usuario debe ser real debido a que se envía un correo de parte de Firebase.
-- Al eliminar un supplier o moneda, los recibos ligados a esos objetos permanecen ligados hasta el momento de editarlos.
-- Ningún eliminado es físico. El registro permanecerá en la base de datos como "inactivo". Si después se vuelve a insertar un registro de proveedores o monedas con la misma información, se reactivará el existente y retornará el mismo ID.
+- All the fields are required.
+- Names and phones can be numbers or letters.
+- Phones are 10 characters max.
+- Admins can't edit nor delete their own user.
+- The user admin@test.com can't be deleted as it is the main admin.
+- You can't register suppliers or users with an existing name.
+- Only admins have access to Users and Catalogs pages.
+- In order to reset the password, the user's email must be real because a password change email is sent by Firebase.
+- When deleting a supplier, all the receipts linked to that supplier ID will be deleted.

@@ -11,7 +11,7 @@ There are two roles in the app:
 
 https://receipts-crud.herokuapp.com/
 
-**NOTA**: The first time, the application and the login can take a little bit to load. This is because the Azure/Heroku hosting is shut down when it is not being used. This is a limitation of the free hosting plan.
+**NOTE**: The first time, the application and the login can take a little bit to load. This is because the Azure/Heroku hosting is shut down when it is not being used. This is a limitation of the free hosting plan.
 
 ## Technologies and dependencies
 

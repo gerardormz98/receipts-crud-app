@@ -7,6 +7,13 @@ There are two roles in the app:
 - **User**: They have access to the Receipts and Profile pages. They can only create, edit, and update receipts.
 - **Admin**: They have access to the Receipts, Profile, Users and Catalogs pages. In addition to being able to handle receipts, admins can add, edit and delete users and suppliers.
 
+**Test credentials**:
+
+|  |  Admin role | User Role |
+|--|--|--|
+| **Email** | admin@test.com | user@test.com|
+| **Password**| 12345678  | 12345678 |
+
 ## URL
 
 https://receipts-crud.herokuapp.com/

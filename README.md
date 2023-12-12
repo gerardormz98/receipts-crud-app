@@ -16,9 +16,7 @@ There are two roles in the app:
 
 ## URL
 
-https://receipts-crud.herokuapp.com/
-
-**NOTE**: The first time, the application and the login can take a little bit to load. This is because the Azure/Heroku hosting is shut down when it is not being used. This is a limitation of the free hosting plan.
+https://receipts-crud.netlify.app/
 
 ## Technologies and dependencies
 

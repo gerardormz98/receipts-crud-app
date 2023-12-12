@@ -33,10 +33,12 @@ const resetPassword = email => {
   return axios.post(`${BASE_URL}/users/reset?email=${email}`);
 };
 
-export default {
+const service = {
   isLoggedIn,
   getUserInfo,
   getUserToken,
   login,
   resetPassword
 };
+
+export default service;

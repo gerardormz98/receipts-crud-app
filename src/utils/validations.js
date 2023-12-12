@@ -24,10 +24,12 @@ const stringEquals = (value, valueToCompare) => {
   return validator.equals(value, valueToCompare);
 };
 
-export default {
+const validations = {
   required,
   numeric,
   email,
   minLength,
   stringEquals
 };
+
+export default validations;

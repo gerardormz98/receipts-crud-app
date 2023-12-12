@@ -57,10 +57,12 @@ const deleteReceipt = id => {
   });
 };
 
-export default {
+const service = {
   getReceipts,
   getReceipt,
   postReceipt,
   putReceipt,
   deleteReceipt
 };
+
+export default service;

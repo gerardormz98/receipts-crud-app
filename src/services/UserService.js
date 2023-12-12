@@ -55,10 +55,12 @@ const deleteUser = id => {
   });
 };
 
-export default {
+const service = {
   getUser,
   getUsers,
   postUser,
   putUser,
   deleteUser
 };
+
+export default service;

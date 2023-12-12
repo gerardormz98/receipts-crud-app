@@ -55,10 +55,12 @@ const deleteSupplier = id => {
   });
 };
 
-export default {
+const service = {
   getSuppliers,
   getSupplier,
   postSupplier,
   putSupplier,
   deleteSupplier
 };
+
+export default service;

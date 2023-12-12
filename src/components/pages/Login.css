@@ -4,7 +4,7 @@
   right: 0;
   z-index: -1;
   display: block;
-  background-image: url("/img/login-background.jpg");
+  background-image: url("../../../public/img/login-background.jpg");
   filter: blur(8px);
   transform: scale(1.1);
   background-position: 0px 0px;
